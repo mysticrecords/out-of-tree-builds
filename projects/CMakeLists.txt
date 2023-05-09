@@ -16,3 +16,4 @@ set(OUT_OF_TREE_BUILD_DIR "${PROJECTPATH}")
 
 add_subdirectory(Function_Templates)
 add_subdirectory(Section_13)
+add_subdirectory(Class_Templates)
