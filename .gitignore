@@ -3,3 +3,4 @@ build
 
 # ignore dirs
 .vscode
+Testing/

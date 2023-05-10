@@ -1,1 +1,3 @@
 add_executable(array_template_classes array_template_classes.cpp)
+
+add_subdirectory(unittest)
