@@ -1,0 +1,3 @@
+add_subdirectory(Challenge_1)
+add_subdirectory(Challenge_2)
+add_subdirectory(STD_list)

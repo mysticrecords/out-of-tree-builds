@@ -4,7 +4,7 @@ pipeline {
     stage('Configure') {
       steps {
         dir('build') {
-          sh 'cmake ../'
+          sh 'cmake .'
         }
       }
     }

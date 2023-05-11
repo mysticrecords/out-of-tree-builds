@@ -1,0 +1,1 @@
+add_executable(list_challenge_2 main.cpp)
