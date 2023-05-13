@@ -3,8 +3,10 @@ pipeline {
   stages {
     stage('Configure') {
       steps {
-        tool name: 'cmake', type: 'hudson.plugins.cmake.CmakeTool'
         dir('build') {
+          cmakeBuild(
+            installation: 'InSearchPath'
+          )
           sh 'cmake .'
         }
       }
