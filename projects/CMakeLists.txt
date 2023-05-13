@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(projects)
 
-set(CMAKE_CXX_FLAGS "-std=c++14")
+set(CMAKE_CXX_FLAGS "-std=c++17")
 
 # include(PrintVariables.cmake)
 
@@ -25,3 +25,4 @@ add_subdirectory(Array_Template_Classes)
 add_subdirectory(STL_iterators)
 add_subdirectory(STD_containers)
 add_subdirectory(Challenges)
+add_subdirectory(STD_stack)
