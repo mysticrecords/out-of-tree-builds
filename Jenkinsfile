@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-PATH=“/Users/jenkins/Qt/Tools/CMake/CMake.app/Contents/bin/:$PATH”
+PATH=“/usr/local/bin/cmake”
 }
   stages {
     stage('Configure') {
