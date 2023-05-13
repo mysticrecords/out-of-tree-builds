@@ -1,1 +1,1 @@
-add_executable(list_challenge main.cpp)
+add_executable(list_practice main.cpp)
