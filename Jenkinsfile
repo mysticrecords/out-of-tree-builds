@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  environment {
-PATH=“/usr/local/bin/cmake”
-}
   stages {
     stage('Configure') {
       steps {
