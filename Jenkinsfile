@@ -6,6 +6,7 @@ PATH=“/usr/local/bin/cmake”
   stages {
     stage('Configure') {
       steps {
+        tool name: 'cmake', type: 'hudson.plugins.cmake.CmakeTool'
         dir('build') {
           sh 'cmake .'
         }
