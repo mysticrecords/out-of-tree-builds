@@ -4,7 +4,7 @@ pipeline {
     stage('Configure') {
       steps {
         dir('build') {
-          cmakeBuild(
+          cmake(
             installation: 'InSearchPath'
           )
           sh 'cmake .'
