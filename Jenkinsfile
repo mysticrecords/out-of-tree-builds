@@ -32,15 +32,29 @@
 
 pipeline {
   agent any
-  stages {
+
+  tools {
+        // Define the CMake installation
+        cmake 'CMake'
+    }
+
+  // stages {
+  //    stage('Check CMake') {
+  //     steps {
+  //       sh 'cmake --version'
+  //     }
+  //   }
     stage('Configure') {
       steps {
-        dir('build') {
-          cmake(
-            installation: 'InSearchPath'
-          )
-          sh 'cmake .'
-        }
+          // Install CMake using the 'tool' step
+                tool name: 'CMake', type: 'hudson.plugins.cmake.CmakeToolInstallation'
+
+        // dir('build') {
+        //   cmake(
+        //     installation: 'InSearchPath'
+        //   )
+        //   sh 'cmake .'
+        // }
       }
     }
     stage('Build') {
