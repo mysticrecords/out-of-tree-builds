@@ -45,8 +45,8 @@ pipeline {
                 dir(env.SOURCE_DIR) {
                     // Run your build commands
                     sh "${env.CMAKE_HOME}/cmake --version"
-                    sh "cmake -B build -S ."
-                    sh "cmake --build build"
+                    sh "${env.CMAKE_HOME}/cmake -B build -S ."
+                    sh "${env.CMAKE_HOME}/cmake --build build"
 
 
                     // ...
