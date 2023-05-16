@@ -39,27 +39,21 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build') {
             steps {
                 // Navigate to the source code directory
                 dir(env.SOURCE_DIR) {
                     // Run your build commands
                     sh "${env.CMAKE_HOME}/cmake --version"
-                    sh "${env.MAKE_HOME}/make"
+                    sh "cmake -B build -S ."
+                    sh "cmake --build build"
+
 
                     // ...
                 }
             }
         }
 
-        // Other stages in your pipeline
-        // ...
     }
 }
 
