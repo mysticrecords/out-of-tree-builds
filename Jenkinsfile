@@ -29,76 +29,109 @@
 // }
 
 
-
 pipeline {
-  agent any
+    agent any
 
-  tools {
-        // Define the CMake installation
-        cmake 'CMake'
+    environment {
+        CMAKE_HOME = '/usr/local/bin/cmake'  // Update this path to the correct location of the CMake executable
     }
 
-  stages {
-      stage('Checkout') {
-      steps {
-        checkout scm
-      }
-    }
-    stage('Configure') {
-      steps {
-           // Install CMake using the 'tool' step
-          tool name: 'CMake', type: 'hudson.plugins.cmake.CmakeTool'
-
-        // dir('build') {
-        //   cmake(
-        //     installation: 'InSearchPath'
-        //   )
-        //   sh 'cmake .'
-        // }
-      }
-    }
-    stage('Build') {
-      steps {
-        dir('build') {
-          sh 'cmake --build .'
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code
+                // ...
+            }
         }
-      }
-    }  
-    stage('Test') {
-      steps {
-        dir('build') {
-          sh 'ctest -C checkin --output-junit unittest.xml'
+
+        stage('Build') {
+            steps {
+                // Run your build commands
+                sh 'cd /path/to/source'
+                sh "${env.CMAKE_HOME}/cmake --version"
+                sh "${env.CMAKE_HOME}/make"
+
+                // ...
+            }
         }
-      }
-    }
-  }
-  post {
-    always {
-      // Archive the CTest xml output
-      archiveArtifacts (
-        artifacts: 'build/*.xml',
-        fingerprint: true
-      )
 
-      // Process the CTest xml output with the xUnit plugin
-      xunit (
-        testTimeMargin: '3000',
-        thresholdMode: 1,
-        thresholds: [
-          skipped(failureThreshold: '0'),
-          failed(failureThreshold: '0')
-        ],
-      tools: [CTest(
-          pattern: 'build/*.xml',
-          deleteOutputFiles: true,
-          failIfNotNew: false,
-          skipNoTestFiles: true,
-          stopProcessingIfError: true
-        )]
-      )
-
-      // Clear the source and build dirs before next run
-      deleteDir()
+        // Other stages in your pipeline
+        // ...
     }
-  }
 }
+
+
+
+
+// pipeline {
+//   agent any
+
+//   tools {
+//         // Define the CMake installation
+//         cmake 'CMake'
+//     }
+
+//   stages {
+//       stage('Checkout') {
+//       steps {
+//         checkout scm
+//       }
+//     }
+//     stage('Configure') {
+//       steps {
+//            // Install CMake using the 'tool' step
+//           tool name: 'CMake', type: 'hudson.plugins.cmake.CmakeTool'
+
+//         // dir('build') {
+//         //   cmake(
+//         //     installation: 'InSearchPath'
+//         //   )
+//         //   sh 'cmake .'
+//         // }
+//       }
+//     }
+//     stage('Build') {
+//       steps {
+//         dir('build') {
+//           sh 'cmake --build .'
+//         }
+//       }
+//     }  
+//     stage('Test') {
+//       steps {
+//         dir('build') {
+//           sh 'ctest -C checkin --output-junit unittest.xml'
+//         }
+//       }
+//     }
+//   }
+//   post {
+//     always {
+//       // Archive the CTest xml output
+//       archiveArtifacts (
+//         artifacts: 'build/*.xml',
+//         fingerprint: true
+//       )
+
+//       // Process the CTest xml output with the xUnit plugin
+//       xunit (
+//         testTimeMargin: '3000',
+//         thresholdMode: 1,
+//         thresholds: [
+//           skipped(failureThreshold: '0'),
+//           failed(failureThreshold: '0')
+//         ],
+//       tools: [CTest(
+//           pattern: 'build/*.xml',
+//           deleteOutputFiles: true,
+//           failIfNotNew: false,
+//           skipNoTestFiles: true,
+//           stopProcessingIfError: true
+//         )]
+//       )
+
+//       // Clear the source and build dirs before next run
+//       deleteDir()
+//     }
+//   }
+// }
