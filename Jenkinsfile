@@ -2,6 +2,11 @@ pipeline {
   agent any
 
   stages {
+    stage('Check CMake') {
+      steps {
+        sh 'cmake --version'
+      }
+    }
     stage('Checkout') {
       steps {
         checkout scm
