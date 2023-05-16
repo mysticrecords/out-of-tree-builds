@@ -47,7 +47,7 @@ pipeline {
                     echo "${WORKSPACE}"
                     sh "${env.CMAKE_HOME}/cmake --version"
                     sh "${env.CMAKE_HOME}/cmake -B build -S ."
-                    sh "${env.CMAKE_HOME}cmake --build build"
+                    sh "${env.CMAKE_HOME}/cmake --build build"
 
 
 
