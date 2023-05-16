@@ -35,19 +35,19 @@ pipeline {
 
   tools {
         // Define the CMake installation
-        cmake 'cmake'
+        cmake 'CMake'
     }
 
   stages {
-  //    stage('Check CMake') {
-  //     steps {
-  //       sh 'cmake --version'
-  //     }
-  //   }
+      stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
     stage('Configure') {
       steps {
-          // Install CMake using the 'tool' step
-                tool name: 'cmake', type: 'hudson.plugins.cmake.CmakeToolInstallation'
+           // Install CMake using the 'tool' step
+          tool name: 'CMake', type: 'hudson.plugins.cmake.CmakeTool'
 
         // dir('build') {
         //   cmake(
