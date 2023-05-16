@@ -38,7 +38,7 @@ pipeline {
         cmake 'CMake'
     }
 
-  // stages {
+  stages {
   //    stage('Check CMake') {
   //     steps {
   //       sh 'cmake --version'
