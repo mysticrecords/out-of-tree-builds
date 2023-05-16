@@ -49,6 +49,7 @@ pipeline {
                     sh "${env.CMAKE_HOME}/cmake --version"
                     sh "${env.CMAKE_HOME}/cmake -B build -S ."
                     sh "${env.CMAKE_HOME}/cmake --build build"
+                    sh "ls -la"
 
                 }
             }
@@ -56,7 +57,7 @@ pipeline {
         stage('Test') {
           steps {
             dir(env.SOURCE_BINARY_DIR) {
-              sh "ls -la && cd unittest && ./array_template_classesUT"
+              sh "ls -la"
               sh "${env.CMAKE_HOME}/ctest -C checkin --output-junit unittest.xml"
             }
           }
