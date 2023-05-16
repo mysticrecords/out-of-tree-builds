@@ -58,7 +58,7 @@ pipeline {
               sh "cd .."
               sh "ls -l"
               sh "cd build/"
-              sh 'ctest -C checkin --output-junit unittest.xml'
+              sh "${env.CMAKE_HOME}/ctest -C checkin --output-junit unittest.xml"
             }
           }
     }
