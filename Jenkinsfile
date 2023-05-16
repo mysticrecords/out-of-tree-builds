@@ -34,6 +34,7 @@ pipeline {
 
     environment {
         CMAKE_HOME = '/usr/local/bin/cmake'  // Update this path to the correct location of the CMake executable
+        SOURCE_DIR = "$WORKSPACE"  // Use the Jenkins workspace directory as the source code directory
     }
 
     stages {
@@ -45,12 +46,14 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Run your build commands
-                sh 'cd /path/to/source'
-                sh "${env.CMAKE_HOME}/cmake --version"
-                sh "${env.CMAKE_HOME}/make"
+                // Navigate to the source code directory
+                dir(env.SOURCE_DIR) {
+                    // Run your build commands
+                    sh "${env.CMAKE_HOME}/cmake --version"
+                    sh "${env.CMAKE_HOME}/make"
 
-                // ...
+                    // ...
+                }
             }
         }
 
