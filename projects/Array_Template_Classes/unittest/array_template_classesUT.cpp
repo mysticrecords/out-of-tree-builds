@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_CASE(test_fill) {
     intArr.fill(0);
 
     std::cout << intArr[0] << " == " << testIntArr[0] <<std::endl;
-    BOOST_CHECK(intArr[0] == testIntArr[0]);
+    BOOST_TEST(intArr[0] == testIntArr[0]);
 }
 
 BOOST_AUTO_TEST_CASE(test_set_fill) {
@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(test_set_fill) {
     intArr.set_fill(10, 3);
 
     std::cout << intArr[3] << " == " << testIntArr[3] << std::endl;
-    BOOST_CHECK(intArr[3] == testIntArr[3]);
+    BOOST_TEST(intArr[3] == testIntArr[3]);
 }
 
 BOOST_AUTO_TEST_CASE(test_get_size) {
@@ -35,5 +35,5 @@ BOOST_AUTO_TEST_CASE(test_get_size) {
     Array<int, 5> intArr {0};
 
     std::cout << intArr.get_size() << " == " << sizeOfTestIntArr << std::endl;
-    BOOST_CHECK_EQUAL(intArr.get_size(), sizeOfTestIntArr);
+    BOOST_TEST(intArr.get_size(), sizeOfTestIntArr);
 }

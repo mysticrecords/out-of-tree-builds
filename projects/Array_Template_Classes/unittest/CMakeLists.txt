@@ -1,4 +1,4 @@
-set(EXECUTABLE_OUTPUT_PATH ${OUT_OF_TREE_UNITTEST_DIR})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 
 
 add_executable(array_template_classesUT array_template_classesUT.cpp)
