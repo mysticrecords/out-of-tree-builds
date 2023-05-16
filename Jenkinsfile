@@ -49,14 +49,20 @@ pipeline {
                     sh "${env.CMAKE_HOME}/cmake -B build -S ."
                     sh "${env.CMAKE_HOME}/cmake --build build"
 
-
-
-                    // ...
                 }
             }
         }
-
+        stage('Test') {
+          steps {
+            dir(env.SOURCE_DIR) {
+              sh "cd .."
+              sh "ls -l"
+              sh "cd build/"
+              sh 'ctest -C checkin --output-junit unittest.xml'
+            }
+          }
     }
+  }
 }
 
 
