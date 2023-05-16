@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Test') {
           steps {
-            dir(env.SOURCE_BINARY_DIR) {
+            dir(env.SOURCE_DIR) {
               sh "ls -la"
               sh "${env.CMAKE_HOME}/ctest -C checkin --output-junit unittest.xml"
             }
