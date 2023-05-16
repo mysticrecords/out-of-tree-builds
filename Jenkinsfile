@@ -35,7 +35,7 @@ pipeline {
     environment {
         CMAKE_HOME = '/usr/local/bin'  // Update this path to the correct location of the CMake executable
         MAKE_HOME = '/usr/bin'  // Update this path to the correct location of the CMake executable
-        SOURCE_DIR = "$WORKSPACE"  // Use the Jenkins workspace directory as the source code directory
+        SOURCE_DIR = "$WORKSPACE/projects"  // Use the Jenkins workspace directory as the source code directory
     }
 
     stages {
