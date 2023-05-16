@@ -33,7 +33,8 @@ pipeline {
     agent any
 
     environment {
-        CMAKE_HOME = '/usr/bin'  // Update this path to the correct location of the CMake executable
+        CMAKE_HOME = '/usr/local/bin'  // Update this path to the correct location of the CMake executable
+        MAKE_HOME = '/usr/bin'  // Update this path to the correct location of the CMake executable
         SOURCE_DIR = "$WORKSPACE"  // Use the Jenkins workspace directory as the source code directory
     }
 
@@ -50,7 +51,7 @@ pipeline {
                 dir(env.SOURCE_DIR) {
                     // Run your build commands
                     sh "${env.CMAKE_HOME}/cmake --version"
-                    sh "${env.CMAKE_HOME}/make"
+                    sh "${env.MAKE_HOME}/make"
 
                     // ...
                 }
