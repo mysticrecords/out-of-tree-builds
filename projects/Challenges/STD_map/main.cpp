@@ -3,14 +3,14 @@
 
 #include "Person.h"
 
-template<typename T>
-void display(std::map<T> &l) {
-    std::cout << "[ ";
-    for(auto el: l) {
-        std::cout << el << " ";
-    }
-    std::cout << " ]" << std::endl;
-};
+// template<typename T>
+// void display(std::map<T> &l) {
+//     std::cout << "[ ";
+//     for(auto el: l) {
+//         std::cout << el << " ";
+//     }
+//     std::cout << " ]" << std::endl;
+// };
 
 int main() {
 
