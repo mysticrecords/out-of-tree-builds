@@ -12,6 +12,11 @@
 //     std::cout << " ]" << std::endl;
 // };
 
+
+int test() {
+    return 1;
+}
+
 int main() {
 
     std::set<Person> people{{"Curly",40}, {"Larry", 25}, {"Moe", 20}};
