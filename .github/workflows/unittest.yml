@@ -50,45 +50,7 @@ jobs:
       - name: Generate Unit Test Summary
         id: summary
         run: |
-          const Chart = require('chart.js');
-          const { createCanvas, registerFont } = require('canvas');
-
-          // Register any fonts if needed
-          // registerFont('path/to/font.woff', { family: 'Font Name' });
-
-          // Calculate your test result numbers
-          const passedTests = 10;
-          const failedTests = 5;
-
-          // Create a canvas
-          const canvas = createCanvas(800, 600);
-          const ctx = canvas.getContext('2d');
-
-          // Use Chart.js to create a pie chart
-          const chart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-              labels: ['Passed', 'Failed'],
-              datasets: [{
-                data: [passedTests, failedTests],
-                backgroundColor: ['#36A2EB', '#FF6384'],
-                hoverBackgroundColor: ['#36A2EB', '#FF6384']
-              }]
-            },
-            options: {
-              plugins: {
-                legend: {
-                  position: 'bottom',
-                },
-              },
-            },
-          });
-
-          // Get the SVG representation of the chart
-          const svg = chart.toBase64Image();
-
-          // Save the SVG as a file
-          require('fs').writeFileSync('chart.svg', svg, 'base64');
+          npx ts-node -r tsconfig-paths/register -e "const Chart = require('chart.js'); const { createCanvas, registerFont } = require('canvas'); const passedTests = 10; const failedTests = 5; const canvas = createCanvas(800, 600); const ctx = canvas.getContext('2d'); const chart = new Chart(ctx, { type: 'pie', data: { labels: ['Passed', 'Failed'], datasets: [{ data: [passedTests, failedTests], backgroundColor: ['#36A2EB', '#FF6384'], hoverBackgroundColor: ['#36A2EB', '#FF6384'] }] }, options: { plugins: { legend: { position: 'bottom' } } } }); const svg = chart.toBase64Image(); require('fs').writeFileSync('chart.svg', svg, 'base64');"
 
       - name: Attach Pie Chart
         uses: actions/upload-artifact@v2
