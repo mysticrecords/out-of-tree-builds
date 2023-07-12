@@ -44,18 +44,41 @@ jobs:
            
       - name: Generate Unit Test Summary
         id: summary
-        run: |
-          # Calculate your test result numbers
-          passed_tests=10
-          failed_tests=5
-          total_tests=$((passed_tests + failed_tests))
-          
-          # Create a pie chart using GitHub Script
-          echo "::set-output name=chart::$(echo "Passed=$passed_tests,Failed=$failed_tests" | base64)"
-
-      - name: Display Pie Chart
-        uses: technote-space/github-action-bar@v2
+        uses: actions/github-script@v4
         with:
-          chart: ${{ steps.summary.outputs.chart }}
+          script: |
+            const Chart = require('chart.js');
+            const fs = require('fs');
+
+            // Calculate your test result numbers
+            const passedTests = 10;
+            const failedTests = 5;
+
+            const data = {
+              labels: ['Passed', 'Failed'],
+              datasets: [
+                {
+                  data: [passedTests, failedTests],
+                  backgroundColor: ['#36A2EB', '#FF6384'],
+                  hoverBackgroundColor: ['#36A2EB', '#FF6384']
+                }
+              ]
+            };
+
+            const config = {
+              type: 'pie',
+              data: data
+            };
+
+            const canvasRenderService = new Chart.CanvasRenderService(800, 600);
+            const image = await canvasRenderService.renderToBuffer(config);
+
+            fs.writeFileSync('chart.png', image);
+
+            // Set the chart image as an output
+            core.setOutput('chart', 'chart.png');
+          
+      - name: Display Pie Chart
+        run: echo "The pie chart is available at ${{ steps.summary.outputs.chart }}"
          
 
