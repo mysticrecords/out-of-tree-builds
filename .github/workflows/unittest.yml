@@ -15,9 +15,14 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3.5.3
+      
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-      - name: current directory
-        run: pwd
+      - name: Install Dependencies
+        run: npm install chart.js canvas
 
       - name: Install cmake
         run: |
