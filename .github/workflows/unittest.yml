@@ -18,4 +18,6 @@ jobs:
 
       - name: Install cmake
         run: |
-          cmake
+          brew install cmake
+          cmake --version
+
