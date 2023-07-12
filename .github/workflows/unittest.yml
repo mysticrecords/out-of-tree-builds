@@ -23,8 +23,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install pkg-config cairo pango libpng jpeg giflib
-          npm install chart.js canvas
+          npm install chart.js
+          npm install canvas --build-from-source
 
       - name: Install cmake
         run: |
