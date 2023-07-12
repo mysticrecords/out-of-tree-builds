@@ -22,7 +22,9 @@ jobs:
           node-version: 14
 
       - name: Install Dependencies
-        run: npm install chart.js svg-crowbar typescript tsconfig-paths
+        run: |
+          npm install chart.js svg-crowbar
+          npm install typescript
 
       - name: Install cmake
         run: |
@@ -50,7 +52,32 @@ jobs:
       - name: Generate Unit Test Summary
         id: summary
         run: |
-          npx ts-node -r tsconfig-paths/register -e "const Chart = require('chart.js'); const { createCanvas, registerFont } = require('canvas'); const passedTests = 10; const failedTests = 5; const canvas = createCanvas(800, 600); const ctx = canvas.getContext('2d'); const chart = new Chart(ctx, { type: 'pie', data: { labels: ['Passed', 'Failed'], datasets: [{ data: [passedTests, failedTests], backgroundColor: ['#36A2EB', '#FF6384'], hoverBackgroundColor: ['#36A2EB', '#FF6384'] }] }, options: { plugins: { legend: { position: 'bottom' } } } }); const svg = chart.toBase64Image(); require('fs').writeFileSync('chart.svg', svg, 'base64');"
+          const { createCanvas, registerFont } = require('canvas');
+          const Chart = require('chart.js');
+          const passedTests = 10;
+          const failedTests = 5;
+          const canvas = createCanvas(800, 600);
+          const ctx = canvas.getContext('2d');
+          const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: ['Passed', 'Failed'],
+              datasets: [{
+                data: [passedTests, failedTests],
+                backgroundColor: ['#36A2EB', '#FF6384'],
+                hoverBackgroundColor: ['#36A2EB', '#FF6384']
+              }]
+            },
+            options: {
+              plugins: {
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }
+          });
+          const svg = chart.toBase64Image();
+          require('fs').writeFileSync('chart.svg', svg, 'base64');
           
       - name: Attach Pie Chart
         uses: actions/upload-artifact@v2
