@@ -28,7 +28,7 @@ jobs:
          cmake --build build
          pwd
          cd build
-         ctest -C checkin --output-junit unittest.xml
+         ctest -C checkin --output-on-failure --output-junit unittest.xml
          ls -la
          
       - name: Publish Test Report
