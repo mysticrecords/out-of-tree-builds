@@ -10,21 +10,18 @@ permissions:
     
 jobs:
   build:
-    name: test
+    name: Unit Tests
     runs-on: runner
     steps:
       - name: checkout
         uses: actions/checkout@v3.5.3
-
-      - name: current directory
-        run: pwd
 
       - name: Install cmake
         run: |
           brew install cmake
           cmake --version
                    
-      - name: build tests
+      - name: Build and Run Tests
         run: |
          cd projects
          cmake -B build -S .
