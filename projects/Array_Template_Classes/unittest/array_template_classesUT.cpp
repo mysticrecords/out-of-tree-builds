@@ -37,3 +37,9 @@ BOOST_AUTO_TEST_CASE(test_get_size) {
     std::cout << intArr.get_size() << " == " << sizeOfTestIntArr << std::endl;
     BOOST_CHECK_EQUAL(intArr.get_size(), sizeOfTestIntArr);
 }
+
+BOOST_AUTO_TEST_CASE(test_incorrect) 
+{
+    int a = 5;
+    BOOST_TEST(a == 3);
+}
