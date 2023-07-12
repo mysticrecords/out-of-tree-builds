@@ -21,13 +21,8 @@ jobs:
         with:
           node-version: 14
 
-      - name: Install Dependencies and Rebuild Canvas
-        run: |
-          brew install pkg-config cairo pango libpng jpeg giflib
-          npm install chart.js canvas
-          cd node_modules/canvas
-          npm rebuild
-          cd ../..
+      - name: Install Dependencies
+        run: npm install chart.js svg-crowbar
 
       - name: Install cmake
         run: |
@@ -54,50 +49,51 @@ jobs:
            
       - name: Generate Unit Test Summary
         id: summary
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const { Chart } = require('chart.js');
-            const { createCanvas, registerFont } = require('canvas');
+        run: |
+          const Chart = require('chart.js');
+          const { createCanvas, registerFont } = require('canvas');
 
-            // Register any fonts if needed
-            // registerFont('path/to/font.woff', { family: 'Font Name' });
+          // Register any fonts if needed
+          // registerFont('path/to/font.woff', { family: 'Font Name' });
 
-            // Calculate your test result numbers
-            const passedTests = 10;
-            const failedTests = 5;
+          // Calculate your test result numbers
+          const passedTests = 10;
+          const failedTests = 5;
 
-            const canvas = createCanvas(800, 600);
-            const ctx = canvas.getContext('2d');
+          // Create a canvas
+          const canvas = createCanvas(800, 600);
+          const ctx = canvas.getContext('2d');
 
-            // Use Chart.js to create a pie chart
-            const chart = new Chart(ctx, {
-              type: 'pie',
-              data: {
-                labels: ['Passed', 'Failed'],
-                datasets: [{
-                  data: [passedTests, failedTests],
-                  backgroundColor: ['#36A2EB', '#FF6384'],
-                  hoverBackgroundColor: ['#36A2EB', '#FF6384']
-                }]
-              },
-              options: {
-                plugins: {
-                  legend: {
-                    position: 'bottom',
-                  },
+          // Use Chart.js to create a pie chart
+          const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: ['Passed', 'Failed'],
+              datasets: [{
+                data: [passedTests, failedTests],
+                backgroundColor: ['#36A2EB', '#FF6384'],
+                hoverBackgroundColor: ['#36A2EB', '#FF6384']
+              }]
+            },
+            options: {
+              plugins: {
+                legend: {
+                  position: 'bottom',
                 },
               },
-            });
+            },
+          });
 
-            // Save the chart as an image
-            const chartImage = canvas.toBuffer('image/png');
-            require('fs').writeFileSync('chart.png', chartImage);
+          // Get the SVG representation of the chart
+          const svg = chart.toBase64Image();
 
-            // Set the chart image as an output
-            core.setOutput('chart', 'chart.png');
-          
-      - name: Display Pie Chart
-        run: echo "The pie chart is available at ${{ steps.summary.outputs.chart }}"
+          // Save the SVG as a file
+          require('fs').writeFileSync('chart.svg', svg, 'base64');
+
+      - name: Attach Pie Chart
+        uses: actions/upload-artifact@v2
+        with:
+          name: Pie Chart
+          path: chart.svg
          
 
