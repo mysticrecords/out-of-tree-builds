@@ -23,8 +23,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm install chart.js svg-crowbar
-          npm install typescript
+          npm install chart.js svg-crowbar canvas-prebuilt
 
       - name: Install cmake
         run: |
