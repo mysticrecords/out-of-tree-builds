@@ -41,5 +41,21 @@ jobs:
           report_paths: '**/*.xml'
           summary: |
            Unit Tests Summary - Complete
+           
+      - name: Generate Unit Test Summary
+        id: summary
+        run: |
+          # Calculate your test result numbers
+          passed_tests=10
+          failed_tests=5
+          total_tests=$((passed_tests + failed_tests))
+          
+          # Create a pie chart using GitHub Script
+          echo "::set-output name=chart::$(echo "Passed=$passed_tests,Failed=$failed_tests" | base64)"
+
+      - name: Display Pie Chart
+        uses: technote-space/github-action-bar@v2
+        with:
+          chart: ${{ steps.summary.outputs.chart }}
          
 
