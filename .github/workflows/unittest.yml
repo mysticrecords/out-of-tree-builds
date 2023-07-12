@@ -58,7 +58,7 @@ jobs:
           echo "const canvas = createCanvas(800, 600);" >> summary.js
           echo "const ctx = canvas.getContext('2d');" >> summary.js
           echo "const chart = new Chart(ctx, {" >> summary.js
-          echo "  type: 'pie'," >> summary.js
+          echo "  type: 'doughnut'," >> summary.js
           echo "  data: {" >> summary.js
           echo "    labels: ['Passed', 'Failed']," >> summary.js
           echo "    datasets: [{" >> summary.js
@@ -78,11 +78,11 @@ jobs:
           echo "const svg = chart.toBase64Image();" >> summary.js
           echo "require('fs').writeFileSync('chart.svg', svg, 'base64');" >> summary.js
           node summary.js
-          
-      - name: Attach Pie Chart
+
+      - name: Attach Doughnut Chart
         uses: actions/upload-artifact@v2
         with:
-          name: Pie Chart
+          name: Doughnut Chart
           path: chart.svg
          
 
