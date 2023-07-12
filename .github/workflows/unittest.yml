@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm install chart.js svg-crowbar canvas-prebuilt
+         npm install chart.js chartjs-node-canvas
 
       - name: Install cmake
         run: |
@@ -51,8 +51,8 @@ jobs:
       - name: Generate Unit Test Summary
         id: summary
         run: |
-          echo "const { createCanvas } = require('canvas');" > summary.js
-          echo "const Chart = require('chart.js');" >> summary.js
+          echo "const Chart = require('chart.js');" > summary.js
+          echo "const { createCanvas } = require('chartjs-node-canvas');" >> summary.js
           echo "const passedTests = 10;" >> summary.js
           echo "const failedTests = 5;" >> summary.js
           echo "const canvas = createCanvas(800, 600);" >> summary.js
