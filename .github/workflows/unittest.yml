@@ -1,23 +1,23 @@
 name: unit tests
 
- on: 
-   push:
-     branches:
-       - '*'
+on: 
+  push:
+    branches:
+      - '*'
 
- jobs:
-   build:
-     name: test
-     runs-on: runner
-     steps:
-       - name: checkout
-         uses: actions/checkout@v3.5.3
+jobs:
+  build:
+    name: test
+    runs-on: runner
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3.5.3
 
-     - name: current directory
-       run: pwd
-         
-     - name: Install cmake
-       run: |
-         sudo brew install cmake 
-         cmake
+      - name: current directory
+        run: pwd
+
+      - name: Install cmake
+        run: |
+          sudo brew install cmake 
+          cmake
       
