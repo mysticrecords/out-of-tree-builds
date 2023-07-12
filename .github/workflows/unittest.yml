@@ -27,8 +27,7 @@ jobs:
          cmake -B build -S .
          cmake --build build
          pwd
-         cd ../
-         ls -la
+         cd build
          ctest -C checkin --output-junit unittest.xml
          
 
