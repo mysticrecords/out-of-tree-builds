@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3.5.3
-        
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2.8.0
 
       - name: current directory
         run: pwd
