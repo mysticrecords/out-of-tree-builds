@@ -20,12 +20,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@mapbox'
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Dependencies
-        run: npm install chart.js canvas
+      - name: Install Dependencies and Rebuild Canvas
+        run: |
+          brew install pkg-config cairo pango libpng jpeg giflib
+          npm install chart.js canvas
+          cd node_modules/canvas
+          npm rebuild
+          cd ../..
 
       - name: Install cmake
         run: |
