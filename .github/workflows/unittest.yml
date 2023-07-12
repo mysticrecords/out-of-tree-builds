@@ -22,7 +22,7 @@ jobs:
           node-version: 14
 
       - name: Install Dependencies
-        run: npm install chart.js svg-crowbar
+        run: npm install chart.js svg-crowbar typescript
 
       - name: Install cmake
         run: |
