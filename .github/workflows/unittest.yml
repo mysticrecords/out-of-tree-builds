@@ -39,5 +39,46 @@ jobs:
         if: success() || failure() # always run even if the previous step fails
         with:
           report_paths: '**/*.xml'
+          summary: |
+           Unit Tests Summary - Complete
+           
+      - name: Generate Unit Test Summary
+        id: summary
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const Chart = require('chart.js');
+            const fs = require('fs');
+
+            // Calculate your test result numbers
+            const passedTests = 10;
+            const failedTests = 5;
+
+            const data = {
+              labels: ['Passed', 'Failed'],
+              datasets: [
+                {
+                  data: [passedTests, failedTests],
+                  backgroundColor: ['#36A2EB', '#FF6384'],
+                  hoverBackgroundColor: ['#36A2EB', '#FF6384']
+                }
+              ]
+            };
+
+            const config = {
+              type: 'pie',
+              data: data
+            };
+
+            const canvasRenderService = new Chart.CanvasRenderService(800, 600);
+            const image = await canvasRenderService.renderToBuffer(config);
+
+            fs.writeFileSync('chart.png', image);
+
+            // Set the chart image as an output
+            core.setOutput('chart', 'chart.png');
+          
+      - name: Display Pie Chart
+        run: echo "The pie chart is available at ${{ steps.summary.outputs.chart }}"
          
 
