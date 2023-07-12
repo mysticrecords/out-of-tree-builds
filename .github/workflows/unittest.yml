@@ -23,6 +23,7 @@ jobs:
                    
       - name: build tests
         run: |
+         cd projects
          cmake -B build -S .
          cmake --build build
          pwd
