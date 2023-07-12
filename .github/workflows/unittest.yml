@@ -52,32 +52,33 @@ jobs:
       - name: Generate Unit Test Summary
         id: summary
         run: |
-          const { createCanvas, registerFont } = require('canvas');
-          const Chart = require('chart.js');
-          const passedTests = 10;
-          const failedTests = 5;
-          const canvas = createCanvas(800, 600);
-          const ctx = canvas.getContext('2d');
-          const chart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-              labels: ['Passed', 'Failed'],
-              datasets: [{
-                data: [passedTests, failedTests],
-                backgroundColor: ['#36A2EB', '#FF6384'],
-                hoverBackgroundColor: ['#36A2EB', '#FF6384']
-              }]
-            },
-            options: {
-              plugins: {
-                legend: {
-                  position: 'bottom'
-                }
-              }
-            }
-          });
-          const svg = chart.toBase64Image();
-          require('fs').writeFileSync('chart.svg', svg, 'base64');
+          echo "const { createCanvas } = require('canvas');" > summary.js
+          echo "const Chart = require('chart.js');" >> summary.js
+          echo "const passedTests = 10;" >> summary.js
+          echo "const failedTests = 5;" >> summary.js
+          echo "const canvas = createCanvas(800, 600);" >> summary.js
+          echo "const ctx = canvas.getContext('2d');" >> summary.js
+          echo "const chart = new Chart(ctx, {" >> summary.js
+          echo "  type: 'pie'," >> summary.js
+          echo "  data: {" >> summary.js
+          echo "    labels: ['Passed', 'Failed']," >> summary.js
+          echo "    datasets: [{" >> summary.js
+          echo "      data: [passedTests, failedTests]," >> summary.js
+          echo "      backgroundColor: ['#36A2EB', '#FF6384']," >> summary.js
+          echo "      hoverBackgroundColor: ['#36A2EB', '#FF6384']" >> summary.js
+          echo "    }]" >> summary.js
+          echo "  }," >> summary.js
+          echo "  options: {" >> summary.js
+          echo "    plugins: {" >> summary.js
+          echo "      legend: {" >> summary.js
+          echo "        position: 'bottom'" >> summary.js
+          echo "      }" >> summary.js
+          echo "    }" >> summary.js
+          echo "  }" >> summary.js
+          echo "});" >> summary.js
+          echo "const svg = chart.toBase64Image();" >> summary.js
+          echo "require('fs').writeFileSync('chart.svg', svg, 'base64');" >> summary.js
+          node summary.js
           
       - name: Attach Pie Chart
         uses: actions/upload-artifact@v2
