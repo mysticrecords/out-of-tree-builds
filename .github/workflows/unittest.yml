@@ -1,0 +1,34 @@
+name: unit tests
+
+on: 
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    name: test
+    runs-on: runner
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3.5.3
+
+      - name: current directory
+        run: pwd
+
+      - name: Install cmake
+        run: |
+          brew install cmake
+          cmake --version
+                   
+      - name: build tests
+        run: |
+         cd projects
+         cmake -B build -S .
+         cmake --build build
+         pwd
+         cd ../
+         ls -la
+         ctest -C checkin --output-junit unittest.xml
+         
+
