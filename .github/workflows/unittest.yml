@@ -38,12 +38,21 @@ jobs:
           
      
       - name: Create Check Annotation
-        uses: actions/create-check-annotation@v1
+        uses: actions/github-script@v4
         with:
-          name: Test Failure
-          file: 'array_template_classesUT.cpp'
-          annotation_level: failure
-          message: 'Test failed at line 50: This is the message why it failed'
-          title: 'Test Failure'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const filename = 'array_template_classesUT.cpp';
+
+            const annotation = {
+              path: filename,
+              start_line: 50,
+              end_line: 50,
+              annotation_level: 'failure',
+              message: `Test failed at line 50: this is the error message`,
+              title: 'Test Failure',
+            };
+
+            await github.checks.create(annotation);
          
 
