@@ -1,13 +1,13 @@
 name: unit tests
 
-on: 
+on:
   push:
     branches:
-      - '*'
+      - "*"
 
 permissions:
-    checks: write
-    
+  checks: write
+
 jobs:
   build:
     name: test
@@ -20,9 +20,10 @@ jobs:
         run: |
           brew install cmake
           cmake --version
-                   
+
       - name: build tests
         run: |
+
          cd projects
          cmake -B build -S .
          cmake --build build
