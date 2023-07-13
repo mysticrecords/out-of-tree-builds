@@ -36,21 +36,14 @@ jobs:
           paths: "**/*.xml"
           show: "pass, fail, skip"
           
-      - name: Read XML file
-        id: read-xml
-        run: |
-          content=$(cat **/*.xml)
-          echo "::set-output name=xml_content::$content"
-
-      - name: Parse XML
-        id: parse-xml
-        run: |
-          echo "${{ steps.read-xml.outputs.xml_content }}" > temp.xml
-          system_out=$(xmllint --xpath 'string(//testcase/system-out)' temp.xml)
-          echo "::set-output name=system_out::$system_out"
-
-      - name: Display System Out
-        run: |
-          echo "System Out: ${{ steps.parse-xml.outputs.system_out }}"
+     
+      - name: Create Check Annotation
+        uses: actions/create-check-annotation@v1
+        with:
+          name: Test Failure
+          file: 'array_template_classesUT.cpp'
+          annotation_level: failure
+          message: 'Test failed at line 50: This is the message why it failed'
+          title: 'Test Failure'
          
 
