@@ -40,20 +40,3 @@ jobs:
         with:
           report_paths: "**/*.xml"
 
-      - name: Create Check Annotation
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const filename = 'array_template_classesUT.cpp';
-
-            const annotation = {
-              path: filename,
-              start_line: 50,
-              end_line: 50,
-              annotation_level: 'failure',
-              message: `Test failed at line 50: this is the error message`,
-              title: 'Test Failure',
-            };
-
-            await github.checks.create(annotation);
