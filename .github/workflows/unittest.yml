@@ -35,14 +35,3 @@ jobs:
         with:
           paths: "**/*.xml"
           show: "pass, fail, skip"
-          output: test-summary.md
-        if: always()
-
-      - name: Upload test summary
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-summary
-          path: test-summary.md
-        if: always()
-         
-
