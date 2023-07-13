@@ -1,13 +1,13 @@
 name: unit tests
 
-on: 
+on:
   push:
     branches:
-      - '*'
+      - "*"
 
 permissions:
-    checks: write
-    
+  checks: write
+
 jobs:
   build:
     name: test
@@ -23,21 +23,37 @@ jobs:
         run: |
           brew install cmake
           cmake --version
-                   
+
       - name: build tests
         run: |
-         cd projects
-         cmake -B build -S .
-         cmake --build build
-         pwd
-         cd build
-         ctest -C checkin --output-junit unittest.xml
-         ls -la
-         
+          cd projects
+          cmake -B build -S .
+          cmake --build build
+          pwd
+          cd build
+          ctest -C checkin --output-junit unittest.xml
+          ls -la
+
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
         if: success() || failure() # always run even if the previous step fails
         with:
-          report_paths: '**/*.xml'
-         
+          report_paths: "**/*.xml"
 
+      - name: Create Check Annotation
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const filename = 'array_template_classesUT.cpp';
+
+            const annotation = {
+              path: filename,
+              start_line: 50,
+              end_line: 50,
+              annotation_level: 'failure',
+              message: `Test failed at line 50: this is the error message`,
+              title: 'Test Failure',
+            };
+
+            await github.checks.create(annotation);
