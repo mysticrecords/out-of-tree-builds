@@ -31,16 +31,10 @@ jobs:
          cd build
          ctest -C checkin --output-junit unittest.xml
          ls -la
-           
-      - uses: test-summary/action@v2
-        with:
-          paths: "**/*.xml"
-          show: "pass, fail, skip"
           
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v3
-        if: always() # always run even if the previous step fails
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
+        if: always()
         with:
-          name: junit-test-results
-          path: '**/*.xml'
-          retention-days: 1
+          files: |
+            **/*.xml
