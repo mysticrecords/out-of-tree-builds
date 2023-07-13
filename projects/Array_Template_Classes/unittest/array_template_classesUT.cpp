@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(test_incorrect)
     BOOST_TEST(a == 5);
 }
 
-BOOST_AUTO_TEST_CASE(test_wrong) 
+BOOST_AUTO_TEST_CASE(test_not_right) 
 {
     int a = 5;
     BOOST_TEST(a == 2);
