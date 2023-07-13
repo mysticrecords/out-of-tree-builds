@@ -39,7 +39,7 @@ jobs:
       - name: Read XML file
         id: read-xml
         run: |
-          content=$(cat **/.xml)
+          content=$(cat **/*.xml)
           echo "::set-output name=xml_content::$content"
 
       - name: Parse XML
