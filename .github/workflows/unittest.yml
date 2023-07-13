@@ -35,5 +35,22 @@ jobs:
         with:
           paths: "**/*.xml"
           show: "pass, fail, skip"
+          
+      - name: Read XML file
+        id: read-xml
+        run: |
+          content=$(cat **/.xml)
+          echo "::set-output name=xml_content::$content"
+
+      - name: Parse XML
+        id: parse-xml
+        run: |
+          echo "${{ steps.read-xml.outputs.xml_content }}" > temp.xml
+          system_out=$(xmllint --xpath 'string(//testcase/system-out)' temp.xml)
+          echo "::set-output name=system_out::$system_out"
+
+      - name: Display System Out
+        run: |
+          echo "System Out: ${{ steps.parse-xml.outputs.system_out }}"
          
 
