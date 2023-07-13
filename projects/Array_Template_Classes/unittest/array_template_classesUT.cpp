@@ -17,6 +17,12 @@ BOOST_AUTO_TEST_CASE(test_fill) {
     BOOST_CHECK(intArr[0] == testIntArr[0]);
 }
 
+BOOST_AUTO_TEST_CASE(test_wrong) 
+{
+    int a = 5;
+    BOOST_TEST(a == 2);
+}
+
 BOOST_AUTO_TEST_CASE(test_set_fill) {
     int testIntArr[5] {0};
     testIntArr[3] = 10;
@@ -26,6 +32,12 @@ BOOST_AUTO_TEST_CASE(test_set_fill) {
 
     std::cout << intArr[3] << " == " << testIntArr[3] << std::endl;
     BOOST_CHECK(intArr[3] == testIntArr[3]);
+}
+
+BOOST_AUTO_TEST_CASE(test_not_right) 
+{
+    int a = 5;
+    BOOST_TEST(a == 2);
 }
 
 BOOST_AUTO_TEST_CASE(test_get_size) {
