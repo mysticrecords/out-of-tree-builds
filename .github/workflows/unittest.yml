@@ -16,10 +16,34 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3.5.3
 
-      - name: Install cmake
+      - name: Cache CMake
+        id: cache-cmake
+        uses: actions/cache@v2
+        with:
+          path: /usr/local/Cellar/cmake  # Adjust the path as per your installed CMake location
+          key: ${{ runner.os }}-cmake-${{ hashFiles('CMakeLists.txt') }}
+        if: steps.cmake.outputs.cmake_version == 'not_cached'
+
+      - name: Install CMake
         run: |
-          brew install cmake
+          if [ -z "$(command -v cmake)" ]; then
+            brew install cmake
+          fi
           cmake --version
+        id: cmake
+        continue-on-error: true
+
+      - name: Check Cached CMake Version
+        run: |
+          if [ -n "$(command -v cmake)" ]; then
+            cmake --version
+            echo "CMake is already installed, skipping installation."
+            echo "cmake_version=installed" >> $GITHUB_ENV
+          else
+            echo "CMake is not installed, will be installed in the next step."
+            echo "cmake_version=not_cached" >> $GITHUB_ENV
+          fi
+        shell: bash
 
       - name: build tests
         run: |
