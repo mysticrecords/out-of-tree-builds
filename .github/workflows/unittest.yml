@@ -38,3 +38,6 @@ jobs:
         with:
           files: |
             **/*.xml
+            
+      - name: add summary
+        run: echo '### UNIT TESTS SUMMARY' >> $GITHUB_STEP_SUMMARY
