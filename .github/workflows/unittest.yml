@@ -23,25 +23,34 @@ jobs:
         run: |
           brew install cmake
           cmake --version
-          
-      - name: List Modified Files
+
+      - name: Debug Git Log
         run: |
-          # List the names of the modified files in the pull request
-          for file in $(git diff --name-only HEAD^..HEAD); do
-            echo "Modified file: $file"
-          done
+          # Fetch the base repository's commit history
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          git log --oneline ${{ github.event.pull_request.base.sha }}..${{ github.sha }}
+
+      - name: Get Modified Files
+        id: files
+        run: |
+          git fetch --depth=2 origin ${{ github.event.pull_request.base.ref }}
+          git fetch --depth=2 origin ${{ github.sha }}
+          files_modified=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          echo "-----------"
+          echo "$files_modified"
+          echo "-----------"
 
       - name: build tests
         run: |
 
-         cd projects
-         cmake -B build -S .
-         cmake --build build
-         pwd
-         cd build
-         ctest -C checkin --output-junit unittest.xml
-         ls -la
-          
+          cd projects
+          cmake -B build -S .
+          cmake --build build
+          pwd
+          cd build
+          ctest -C checkin --output-junit unittest.xml
+          ls -la
+
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
         if: always()
