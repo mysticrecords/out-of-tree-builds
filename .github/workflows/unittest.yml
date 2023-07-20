@@ -26,7 +26,11 @@ jobs:
           
       - name: Get Modified Files
         id: files
-        run: echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})" >> $GITHUB_ENV
+        run: |
+          echo "git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }}"
+          echo "----------------------------------------------"
+          echo "git diff --name-only  55220a42b3fcc426b5a075ef9c774e297780808c"
+          echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})" >> $GITHUB_ENV
           
       - name: List Modified Files
         run: |
