@@ -31,6 +31,17 @@ jobs:
           git --version
           files_edited=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
           echo "FILES=${files_edited}" >> $GITHUB_ENV
+          
+      - name: print files
+        run: |
+          IFS=' ' read -ra FILES_TO_READ <<< "$FILES"
+          
+          echo "$FILES"
+          echo "--------------------------"
+          
+          for f in ${FILES_TO_READ[@]}; do
+           echo "$f"
+          done
 
       - name: build tests
         run: |
@@ -42,17 +53,6 @@ jobs:
          cd build
          ctest -C checkin --output-junit unittest.xml
          ls -la
-     
-      - name: print files
-        run: |
-          IFS=' ' read -ra FILES_TO_READ <<< "$FILES"
-          
-          echo "$FILES"
-          echo "--------------------------"
-          
-          for f in ${FILES_TO_READ[@]}; do
-           echo "$f"
-          done
           
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
