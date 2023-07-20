@@ -24,12 +24,16 @@ jobs:
           brew install cmake
           cmake --version
           
-      - name: List Modified Files
+      - name: Debug Git Log
         run: |
-          # List the names of the modified files in the pull request
-          for file in $(git diff --name-only HEAD^..HEAD); do
-            echo "Modified file: $file"
-          done
+          # Fetch the base repository's commit history
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          git log --oneline ${{ github.event.pull_request.base.sha }}..${{ github.sha }}
+
+      - name: Get Modified Files
+        id: files
+        run: |
+          git diff --name-only ${{ github.base_ref }} ${{ github.sha }})
 
       - name: build tests
         run: |
