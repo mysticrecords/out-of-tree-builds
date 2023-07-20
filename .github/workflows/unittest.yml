@@ -59,7 +59,7 @@ jobs:
           echo "$FILES"
           echo "--------------------------"
           
-          for f in ${FILES_TO_READ[@]; do
+          for f in ${FILES_TO_READ[@]}; do
            echo "$f"
           done
           
