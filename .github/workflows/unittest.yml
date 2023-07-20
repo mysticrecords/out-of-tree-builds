@@ -24,6 +24,12 @@ jobs:
           brew install cmake
           cmake --version
           
+      - name: Debug Git Log
+        run: |
+          # Fetch the base repository's commit history
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          git log --oneline ${{ github.event.pull_request.base.sha }}..${{ github.sha }}
+          
       - name: Get Modified Files
         id: files
         run: |
