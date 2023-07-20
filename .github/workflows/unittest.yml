@@ -34,6 +34,11 @@ jobs:
         id: files
         run: |
           git diff --name-only ${{ github.base_ref }} ${{ github.sha }}
+          
+      - name: Print Edited Files
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr_${{ github.event.pull_request.number }}
+          git diff pr_${{ github.event.pull_request.number }} --name-only
 
       - name: build tests
         run: |
