@@ -17,7 +17,7 @@ jobs:
     runs-on: runner
     steps:
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3
 
       - name: Install cmake
         run: |
@@ -27,6 +27,8 @@ jobs:
       - name: Get Modified Files
         id: files
         run: |
+          git fetch --depth=2 origin ${{ github.event.pull_request.base.ref }}
+          git fetch --depth=2 origin ${{ github.sha }}
           files_modified=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
           echo "-----------"
           echo "$files_modified"
