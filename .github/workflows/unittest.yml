@@ -27,7 +27,7 @@ jobs:
       - name: Get Modified Files
         id: files
         run: |
-          files_edited=git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }}
+          files_edited=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
           echo "----------------------------------------------"
           echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})" >> $GITHUB_ENV
           echo "${files_edited}
