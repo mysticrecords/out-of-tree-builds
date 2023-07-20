@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="1"
+	failures="1"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="0"
+	timestamp="2023-07-13T14:34:09"
+	>
+	<testcase name="array_template_classes_unittest" classname="array_template_classes_unittest" time="0.00615624" status="fail">
+		<failure message=""/>
+		<system-out>Running 6 test cases...
+0 == 0
+10 == 10
+3 == 5
+/Users/mattwalsh/Documents/Projects/out-of-tree-builds/projects/Array_Template_Classes/unittest/array_template_classesUT.cpp:50: [NON-XML-CHAR-0x1B][1;31;49merror: in "test_get_size": check intArr.get_size() == sizeOfTestIntArr has failed [3 != 5][NON-XML-CHAR-0x1B][0;39;49m
+
+[NON-XML-CHAR-0x1B][1;31;49m*** 1 failure is detected in the test module "arrayTemplateClassTest"
+[NON-XML-CHAR-0x1B][0;39;49m
+</system-out>
+	</testcase>
+</testsuite>

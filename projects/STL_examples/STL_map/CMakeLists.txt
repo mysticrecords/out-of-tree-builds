@@ -1,0 +1,1 @@
+add_executable(map_practice main.cpp)

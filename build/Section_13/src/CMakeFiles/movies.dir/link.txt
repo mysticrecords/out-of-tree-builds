@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++ -std=c++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/movies.dir/main.cpp.o CMakeFiles/movies.dir/Movie.cpp.o CMakeFiles/movies.dir/Movies.cpp.o -o movies 

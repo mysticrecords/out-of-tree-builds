@@ -1,0 +1,7 @@
+add_subdirectory(STL_containers)
+add_subdirectory(STL_list)
+add_subdirectory(STL_map)
+add_subdirectory(STL_queue)
+add_subdirectory(STL_set)
+add_subdirectory(STL_stack)
+add_subdirectory(STL_iterators)
