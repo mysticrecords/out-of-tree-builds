@@ -35,8 +35,9 @@ jobs:
           
       - name: print files
         run: |
+
           IFS='~' read -ra FILES_TO_READ <<< "$FILES"
-          
+
           echo "$FILES"
           echo "--------------------------"
           
