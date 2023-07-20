@@ -1,9 +1,8 @@
 name: unit tests
 
 on:
-  push:
-    branches:
-      - "*"
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -18,22 +17,20 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3.5.3
+        with:
+         fetch-depth: 2
 
       - name: Install cmake
         run: |
           brew install cmake
           cmake --version
-          
-      - name: Debug Git Log
-        run: |
-          # Fetch the base repository's commit history
-          git fetch origin ${{ github.event.pull_request.base.ref }}
-          git log --oneline ${{ github.event.pull_request.base.sha }}..${{ github.sha }}
 
       - name: List Modified Files
         run: |
-          # List the names of the modified files in the pull request
-          git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }}
+          # List the names of the modified files in the pull request - open a pull request
+          git --version
+          files_edited=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          echo "FILES=${files_edited}" >> $GITHUB_ENV
 
       - name: build tests
         run: |
@@ -45,6 +42,17 @@ jobs:
          cd build
          ctest -C checkin --output-junit unittest.xml
          ls -la
+     
+      - name: print files
+        run: |
+          IFS=' ' read -ra FILES_TO_READ <<< "$FILES"
+          
+          echo "$FILES"
+          echo "--------------------------"
+          
+          for f in ${FILES_TO_READ[@]}; do
+           echo "$f"
+          done
           
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
