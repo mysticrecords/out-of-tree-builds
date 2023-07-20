@@ -33,18 +33,13 @@ jobs:
       - name: Get Modified Files
         id: files
         run: |
-          git fetch --depth=2 origin ${{ github.event.pull_request.base.ref }}
+          git fetch --depth=2 origin ${{ github.base_ref }}
           git fetch --depth=2 origin ${{ github.sha }}
           files_modified=$(git diff --name-only ${{ github.base_ref }} ${{ github.sha }})
           echo "-----------"
           echo "$files_modified"
           echo "-----------"
-          # Use GitHub REST API to get the list of modified files in the pull request
-          files_modified=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                          "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" \
-                          | jq -r '.[].filename')
-          echo "Modified files in the pull request:"
-          echo "$files_modified"
+         
 
       - name: build tests
         run: |
