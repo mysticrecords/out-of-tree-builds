@@ -42,7 +42,8 @@ jobs:
           echo "--------------------------"
           
           for f in ${FILES_TO_READ[@]}; do
-           echo "$f"
+           echo "$f" >> modified_files.txt
+           echo "$pwd"
           done
 
       - name: build tests
