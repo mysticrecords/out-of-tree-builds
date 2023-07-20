@@ -27,10 +27,10 @@ jobs:
       - name: Get Modified Files
         id: files
         run: |
-          git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }}
+          files_edited=git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }}
           echo "----------------------------------------------"
           echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})" >> $GITHUB_ENV
-          
+          echo "${files_edited}
       - name: List Modified Files
         run: |
           # List the names of the modified files in the pull request
