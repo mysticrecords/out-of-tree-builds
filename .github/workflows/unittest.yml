@@ -33,7 +33,7 @@ jobs:
       - name: Get Modified Files
         id: files
         run: |
-          git diff --name-only ${{ github.base_ref }} ${{ github.sha }})
+          git diff --name-only ${{ github.base_ref }} ${{ github.sha }}
 
       - name: build tests
         run: |
