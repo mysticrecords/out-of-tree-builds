@@ -23,6 +23,13 @@ jobs:
         run: |
           brew install cmake
           cmake --version
+          
+      - name: List Modified Files
+        run: |
+          # List the names of the modified files in the pull request
+          for file in $(git diff --name-only HEAD^..HEAD); do
+            echo "Modified file: $file"
+          done
 
       - name: build tests
         run: |
