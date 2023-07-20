@@ -20,7 +20,7 @@ BOOST_AUTO_TEST_CASE(test_fill) {
 BOOST_AUTO_TEST_CASE(test_wrong) 
 {
     int a = 5;
-    BOOST_TEST(a == 5);
+    BOOST_TEST(a == 1);
 }
 
 BOOST_AUTO_TEST_CASE(test_set_fill) {
