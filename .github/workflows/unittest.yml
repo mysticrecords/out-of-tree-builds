@@ -24,16 +24,16 @@ jobs:
           brew install cmake
           cmake --version
           
+      - name: Get Modified Files
+        id: files
+        run: echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})" >> $GITHUB_ENV
+          
       - name: List Modified Files
         run: |
           # List the names of the modified files in the pull request
-          for file in ${{ steps.files.outputs.files_modified }}; do
+          for file in ${FILES}; do
             echo "Modified file: $file"
           done
-
-      - name: Get Modified Files
-        id: files
-        run: echo "::set-output name=files_modified::$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})"
 
       - name: build tests
         run: |
