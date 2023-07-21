@@ -1,0 +1,1 @@
+add_executable(set_practice main.cpp)

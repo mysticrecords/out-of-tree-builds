@@ -30,17 +30,20 @@ jobs:
           # List the names of the modified files in the pull request - open a pull request
           git --version
           files_edited=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          files_edited="${files_edited//$'\n'/~}"
           echo "FILES=${files_edited}" >> $GITHUB_ENV
           
       - name: print files
         run: |
-          IFS=' ' read -ra FILES_TO_READ <<< "$FILES"
-          
+
+          IFS='~' read -ra FILES_TO_READ <<< "$FILES"
+
           echo "$FILES"
           echo "--------------------------"
           
           for f in ${FILES_TO_READ[@]}; do
-           echo "$f"
+           echo "$f" >> modified_files.txt
+           echo "$pwd"
           done
 
       - name: build tests
