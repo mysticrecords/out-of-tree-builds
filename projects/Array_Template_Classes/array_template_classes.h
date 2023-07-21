@@ -37,7 +37,7 @@ public:
     }
 
     int get_size() const {
-        return size;
+        return size*size;
     }
     //overloaded subscript operator
     T &operator[](size_t index) {
