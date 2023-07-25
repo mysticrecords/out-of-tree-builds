@@ -55,6 +55,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # trying to run tests to edit status of pr
           COUNTED_FILES=$((COUNTED_FILES))
           TOTAL_FILES=$((TOTAL_FILES))
           if ((TOTAL_FILES == COUNTED_FILES)); then
