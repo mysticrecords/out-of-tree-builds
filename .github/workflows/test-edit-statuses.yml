@@ -1,0 +1,73 @@
+name: count files
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: test
+    runs-on: runner
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3.5.3
+        with:
+         fetch-depth: 2
+
+      - name: List Modified Files
+        run: |
+          # List the names of the modified files in the pull request - open a pull request
+          git --version
+          files_edited=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          files_edited="${files_edited//$'\n'/~}"
+          count_files=$(git diff --numstat | wc -l)
+          echo "FILES=${files_edited}" >> $GITHUB_ENV
+          echo "$count_files - file(s) edited"
+          echo "COUNTED_FILES=${count_files}" >> $GITHUB_ENV
+          
+      - name: print files
+        run: |
+
+          IFS='~' read -ra FILES_TO_READ <<< "$FILES"
+
+          echo "$FILES"
+          echo "--------------------------"
+          
+          COUNT=0
+          
+          for f in ${FILES_TO_READ[@]}; do
+           echo "$f" >> modified_files.txt
+           COUNT=$((COUNT+1))
+           echo "$pwd"
+          done
+          
+          echo "TOTAL_FILES=${COUNT}" >>> $GITHUB_ENV
+          
+          
+      - name: Set PR Status
+        if: ${{ always() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Replace this with your custom logic to determine success or failure
+          # For example, if the tests pass, set the status to "success"; otherwise, set it to "failure"
+          if [ $TOTAL_FILES -eq COUNTED_FILES ]; then
+            STATE="success"
+          else
+            STATE="failure"
+          fi
+
+          # Set the PR status using GitHub API
+          curl -X POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            -d '{"state": "'$STATE'", "context": "Counting files edited"}'
+          
+          
+
+ 
