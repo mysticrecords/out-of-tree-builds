@@ -55,9 +55,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Replace this with your custom logic to determine success or failure
-          # For example, if the tests pass, set the status to "success"; otherwise, set it to "failure"
-          if [ $TOTAL_FILES -eq COUNTED_FILES ]; then
+          COUNTED_FILES=$((COUNTED_FILES))
+          TOTAL_FILES=$((TOTAL_FILES))
+          if ((TOTAL_FILES == COUNTED_FILES)); then
             STATE="success"
           else
             STATE="failure"
