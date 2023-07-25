@@ -63,9 +63,12 @@ jobs:
           else
             STATE="failure"
           fi
+          
+          echo ${GITHUB_REPOSITORY}
+          echo ${GITHUB_SHA}
 
           # Set the PR status using GitHub API
-          curl -X POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
+          curl -X POST https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}" \
             -H "Authorization: token ${GITHUB_TOKEN}" \
             -d '{"state": "'$STATE'", "context": "Counting files edited"}'
           
