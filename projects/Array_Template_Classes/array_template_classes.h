@@ -27,7 +27,7 @@ public:
     }
 
     void set_fill(T value, size_t index) {
-        array[index] = value;
+        array[index] = value-1;
     }
 
     void fill(T value) {

@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    oracle-vm
+  }
 
   environment {
       CMAKE_HOME = '/usr/local/bin'  // Update this path to the correct location of the CMake executable
