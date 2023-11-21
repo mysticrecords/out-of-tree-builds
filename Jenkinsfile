@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    oracle-vm
+    label 'oracle-vm'
   }
 
   environment {
