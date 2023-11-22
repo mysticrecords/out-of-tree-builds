@@ -1,0 +1,21 @@
+name: Trigger Jenkins Job
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - any
+
+jobs:
+  trigger-jenkins-job:
+    runs-on: runner
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Trigger Jenkins Job
+        run: |
+          curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X POST https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/bbbbbranch/build
