@@ -18,7 +18,7 @@ jobs:
 
       - name: Set Branch Name
         run: | 
-         echo "BRANCH_NAME=${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+         echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
            
       - name: Trigger Jenkins Job
         run: |
