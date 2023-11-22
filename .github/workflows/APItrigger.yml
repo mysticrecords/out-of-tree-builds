@@ -17,7 +17,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set Branch Name
-        run: echo "BRANCH_NAME=${{ github.ref | replace('refs/heads/', '') }}" >> $GITHUB_ENV
+        run: | 
+         echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
            
       - name: Trigger Jenkins Job
         run: |
