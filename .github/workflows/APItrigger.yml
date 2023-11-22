@@ -18,6 +18,4 @@ jobs:
            
       - name: Trigger Jenkins Job
         run: |
-         branch_name=${{ github.sha }}
-         echo "BRANCH_NAME=${branch_name}" >> GITHUB_ENV
-         curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X POST https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ BRANCH_NAME }}/build
+         curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X POST https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ github.event.pull_request.head.sha }}/build
