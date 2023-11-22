@@ -15,12 +15,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Get Branch Name
-        run: | 
-
            
-
       - name: Trigger Jenkins Job
         run: |
          BRANCH_NAME=${GITHUB_REF#refs/heads/}
