@@ -18,7 +18,6 @@ jobs:
            
       - name: Trigger Jenkins Job
         run: |
-         branch_name=${GITHUB_REF#refs/heads/}
-         echo "branch name = ${branch_name}"
-         echo "BRANCH_NAME=${branch_name}" >> $GITHUB_ENV
+         branch_name=${{ github.sha }}
+         echo "BRANCH_NAME=${branch_name}" >> GITHUB_ENV
          curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X POST https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ BRANCH_NAME }}/build
