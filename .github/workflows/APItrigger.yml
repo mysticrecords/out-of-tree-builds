@@ -8,6 +8,13 @@ on:
     branches:
       - any
 
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+  statuses: write
+
 jobs:
   trigger-jenkins-job:
     runs-on: runner
