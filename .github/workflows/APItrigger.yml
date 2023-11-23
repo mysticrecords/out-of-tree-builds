@@ -24,3 +24,33 @@ jobs:
         run: |
          curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X POST https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build
 
+      - name: Install jq
+        run: |
+         sudo apt-get update
+         sudo apt-get install jq
+
+      - name: Jenkins Build Result
+        run: | 
+         result=$(curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X GET https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result | jq -r '.result')
+         echo "Build result: $result"
+         echo "RESULT=${result}" >> $GITHUB_ENV
+
+      - name: Set PR Status
+        if: ${{ always() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # trying to run tests to edit status of pr
+          
+          if ($RESULT == "SUCCESS"); then
+            STATE="success"
+          else
+            STATE="failure"
+          fi
+          
+          echo ${GITHUB_REPOSITORY}
+          echo ${GITHUB_SHA}
+          # Set the PR status using GitHub API
+          curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}" \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            -d '{"state": "'$STATE'", "context": "Multibranch Pipeline Build Result"}'
