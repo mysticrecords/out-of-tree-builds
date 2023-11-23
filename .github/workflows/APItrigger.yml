@@ -59,4 +59,4 @@ jobs:
           # Set the PR status using GitHub API
           curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}" \
             -H "Authorization: token ${GITHUB_TOKEN}" \
-            -d '{"state": "'$STATE'", "context": "Multibranch Pipeline Build Result", "target_url": "https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild"}'
+            -d '{"state": "'$STATE'", "context": "Multibranch Pipeline Build Result", "target_url": "http://localhost:8080/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild"}'
