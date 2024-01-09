@@ -21,3 +21,8 @@ jobs:
          BRANCH_NAME=${GITHUB_REF#refs/heads/}
          echo "branch name = ${BRANCH_NAME}"
          curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X POST https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ BRANCH_NAME }}/build
+
+      - name: Get Job Status
+        run: |
+          response=$(curl -v -u "mawalsh:11168ae8636b233ed846b8d3a6226d099a" -X GET https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ BRANCH_NAME }}/lastBuild/api/json?tree=result)
+          echo $response
