@@ -1,9 +1,11 @@
 name: Determine Base Branch
 
 on:
-  push:
-    branches:
-      - '*'
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
 
 jobs:
   determine-base-branch:
