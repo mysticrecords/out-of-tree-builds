@@ -23,6 +23,25 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: test sleep
+        run: |
+          build_status="false"
+
+          while [ "build_status" == "false" ]; then
+            sleep 1
+            echo "sleeping"
+            sleep 1
+            echo "sleeping"
+            sleep 1
+            echo "sleeping"
+            sleep 1
+            echo "sleeping"
+            sleep 1
+            echo "sleeping"
+            
+            build_status="true"
+          done
+
       - name: Set Branch Name
         run: | 
          echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
