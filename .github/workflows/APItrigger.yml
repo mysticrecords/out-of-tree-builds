@@ -38,6 +38,16 @@ jobs:
             echo "sleeping"
             sleep 1
             echo "sleeping"
+            sleep 1
+            echo "sleeping"
+            sleep 1
+            echo "sleeping"
+            sleep 1
+            echo "sleeping"
+            sleep 1
+            echo "sleeping"
+            sleep 1
+            echo "sleeping"
             
             build_status="true"
           done
