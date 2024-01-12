@@ -19,17 +19,17 @@ jobs:
       run: |
         build_status="false"
 
-          while [ "build_status" == "false" ]; then
-            sleep 1
-            echo "sleeping"
-            sleep 1
-            echo "sleeping"
-            sleep 1
-            echo "sleeping"
-            sleep 1
-            echo "sleeping"
-            build_status="true"
-          done
+        while [ "$build_status" == "false" ]; then
+          sleep 1
+          echo "sleeping"
+          sleep 1
+          echo "sleeping"
+          sleep 1
+          echo "sleeping"
+          sleep 1
+          echo "sleeping"
+          build_status="true"
+        done
 
     - name: Display base branch
       run: echo "Base branch is $GITHUB_BASE_REF"
