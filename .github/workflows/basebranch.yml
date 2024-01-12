@@ -1,0 +1,20 @@
+name: Determine Base Branch
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  determine-base-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get base branch
+      run: echo "BASE_BRANCH=$(git rev-parse --abbrev-ref HEAD^2)" >> $GITHUB_ENV
+
+    - name: Display base branch
+      run: echo "Base branch is $BASE_BRANCH"
