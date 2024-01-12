@@ -27,7 +27,7 @@ jobs:
         run: |
           build_status="false"
 
-          while [ "build_status" == "false" ]; then
+          while [ "build_status" == "false" ]; do
             sleep 1
             echo "sleeping"
             sleep 1
