@@ -40,7 +40,7 @@ jobs:
         run: | 
          branch="abcdefg"
          echo BRANCH_TEST="${branch}" >> $GITHUB_ENV
-         result=$(curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X GET https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ env.BRANCH_TEST }}/lastBuild/api/json?tree=result | jq -r '.result')
+         result=$(curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X GET https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${branch}/lastBuild/api/json?tree=result | jq -r '.result')
          echo "Build result: $result"
          echo "RESULT=${result}" >> $GITHUB_ENV
 
