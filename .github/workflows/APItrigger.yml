@@ -39,8 +39,8 @@ jobs:
         if: ${{ always() }}
         run: | 
          branch="abcdefg"
-         request=$(curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X GET https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${branch}/lastBuild/api/json?tree=result)
-         result=$(echo "request" | jq -r '.result')
+         request=$(curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X GET "https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${branch}/lastBuild/api/json?tree=result")
+         result=$(echo "$request" | jq -r '.result')
          echo "Build result: $result"
          echo "RESULT=${result}" >> $GITHUB_ENV
 
