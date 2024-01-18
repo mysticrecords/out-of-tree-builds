@@ -45,12 +45,12 @@ jobs:
          echo "AUTH: $AUTH"
          echo "CURL: $CURL"
          echo "CURL_POST: $CURL_POST"
-         trigger=($CURL_POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         trigger=(curl -v -u "${{ secrets.JENKINS_USER }}":"${{ secrets.JENKINS_TOKEN }}" -X POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
 
       - name: test get
         run: | 
-         # trigger=("${CURL}" "${URL}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
-         trigger_unquoted=(${CURL} "${URL}/job/matt-wash-projects/job/bbbbbranch/lastBuild/api/json?tree=result")
+         # trigger=(curl -v -u "${{ secrets.JENKINS_USER }}":"${{ secrets.JENKINS_TOKEN }}" "${URL}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         trigger_unquoted=(curl -v -u "${{ secrets.JENKINS_USER }}":"${{ secrets.JENKINS_TOKEN }}" "${URL}/job/matt-wash-projects/job/bbbbbranch/lastBuild/api/json?tree=result")
          # res=$(echo "$trigger" | jq -r '.result')
          res_un=$(echo "$trigger_unquoted" | jq -r '.result')
 
