@@ -30,7 +30,7 @@ jobs:
         run: |
           export JENKINS_USER="${{ secrets.JENKINS_USER }}"
           export JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
-          bash .github/workflows/UTILS/utils.sh
+          source .github/workflows/UTILS/utils.sh
            
       - name: Multibranch Pipeline Trigger
         run: | 
