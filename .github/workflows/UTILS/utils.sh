@@ -1,6 +1,6 @@
 #! /bin/sh
 
-AUTH="${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}"
+AUTH='"${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}"'
 CURL="curl -v -u \"$AUTH\""
 CURL_POST="\"$CURL\" -X POST"
 
