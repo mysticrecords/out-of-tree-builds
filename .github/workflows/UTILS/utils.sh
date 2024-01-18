@@ -1,5 +1,3 @@
-#! /bin/sh
-
 AUTH="$JENKINS_USER:$JENKINS_TOKEN"
 CURL="curl -v -u \"$AUTH\""
 CURL_POST="$CURL -X POST"
