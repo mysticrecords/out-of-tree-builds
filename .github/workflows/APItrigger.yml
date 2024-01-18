@@ -37,9 +37,6 @@ jobs:
       - name: Multibranch Pipeline Trigger
         run: |
          trigger=($CURL_POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
-         echo "$CURL"
-         echo $CURL
-         echo "$trigger"
 
       - name: Install jq
         run: |
