@@ -36,40 +36,9 @@ jobs:
          echo $AUTH
          trigger=($CURL_POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
 
-      - name: Install jq
-        run: |
-         brew install jq
-
-      - name: Jenkins Build Result
-        if: ${{ always() }}
+      - name: access variable from utils.sh
         run: | 
-         source .github/workflows/UTILS/utils.sh
          echo $URL
-         branch="bbbbbranch"
-         echo "BRANCH_TEST=${branch}" >> $GITHUB_ENV
-         request=$($CURL "https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${branch}/lastBuild/api/json?tree=result")
-         result=$(echo "$request" | jq -r '.result')
-         echo "Build result: $result"
-         echo "RESULT=${result}" >> $GITHUB_ENV
-
-      - name: Set PR Status
-        if: ${{ always() }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # trying to run tests to edit status of pr
-          
-          if ($RESULT == "SUCCESS"); then
-            STATE="success"
-          else
-            STATE="failure"
-          fi
-
-          branch=${{ env.BRANCH_NAME }}
-          
-          echo ${GITHUB_REPOSITORY}
-          echo ${GITHUB_SHA}
-          # Set the PR status using GitHub API
-          curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}" \
-            -H "Authorization: token ${GITHUB_TOKEN}" \
-            -d '{"state": "'$STATE'", "context": "Multibranch Pipeline Build Result", "target_url": "http://localhost:8080/job/matt-wash-projects/job/${branch}/lastBuild"}'
+         echo "$POST"
+         echo "$POST"
+         echo $AUTH
