@@ -28,7 +28,7 @@ jobs:
          
       - name: Debug Environment Variables
         run: |
-          source ./github/workflows/UTILS/utils.sh
+          source .github/workflows/UTILS/utils.sh
           echo "URL: ${URL}" >> GITHUB_ENV
           echo "AUTH: ${AUTH}" >> GITHUB_ENV
           echo "CURL: ${CURL}" >> GITHUB_ENV
