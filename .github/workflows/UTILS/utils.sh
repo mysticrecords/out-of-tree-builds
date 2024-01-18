@@ -1,6 +1,6 @@
 #! /bin/sh
 
-AUTH="${{ secrets.JENKINS_USER }}":"${{ secrets.JENKINS_TOKEN }}"
+AUTH='"${{ secrets.JENKINS_USER }}":"${{ secrets.JENKINS_TOKEN }}"'
 CURL="CURL=curl -v -u \"$AUTH\""
 
 echo "URL=https://a040-92-13-233-78.ngrok-free.app" >> $GITHUB_ENV
