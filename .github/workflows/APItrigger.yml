@@ -28,8 +28,13 @@ jobs:
          echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
 
       - name: Source UTILS script
-        run: source .github/workflows/UTILS/utils.sh
-
+        run: |
+         source .github/workflows/UTILS/utils.sh
+         echo "URL=$URL" >> GITHUB_ENV
+         echo "AUTH=$AUTH" >> GITHUB_ENV
+         echo "CURL=$CURL" >> GITHUB_ENV
+         echo "CURL_POST=$CURL_POST" >> GITHUB_ENV
+         
       - name: Debug Environment Variables
         run: |
           echo "URL: $URL"
