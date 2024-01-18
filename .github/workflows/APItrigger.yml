@@ -42,7 +42,7 @@ jobs:
 
       - name: test get
         run: | 
-         trigger_unquoted=(${{ env.CURL }} ${{ env.AUTH }} "${{ env.URL }}/job/matt-wash-projects/job/bbbbbranch/lastBuild/api/json?tree=result")
+         trigger_unquoted=(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/bbbbbranch/lastBuild/api/json?tree=result")
          res=$( echo "$trigger_unquoted" | jq -r '.result')
          echo $res
          echo $trigger_unquoted
