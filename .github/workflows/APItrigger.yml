@@ -44,10 +44,18 @@ jobs:
 
       - name: test get
         run: | 
-         trigger_unquoted=(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/bbbbbranch/lastBuild/api/json?tree=result")
-         res=$( echo "$trigger_unquoted" | jq -r '.result')
-         echo $res
-         echo $trigger_unquoted
+          trigger_unquoted=(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result")
+          res=$(echo -n "${trigger_unquoted[*]}" | jq -r '.result')
+          echo "$res"
+          echo "${trigger_unquoted[*]}"
+
+      - name: test test get
+        run: | 
+          trigger_unquoted=(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result")
+          echo -n "${trigger_unquoted[*]}" > response.json
+          res=$(jq -r '.result' < response.json)
+          echo "$res"
+          cat response.json
          
       - name: access variable from utils.sh
         run: | 
