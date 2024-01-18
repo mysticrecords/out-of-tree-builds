@@ -37,8 +37,8 @@ jobs:
          echo "CURL: $CURL"
          echo "CURL_POST: $CURL_POST"
 
-         # trigger=(${{ env.CURL }}  ${{ env.AUTH }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
-         trigger=(${{ env.CURL }}  ${{ env.AUTH }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         # trigger=(${{ env.CURL_POST }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         trigger=(${{ env.CURL_POST }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
 
       - name: test get
         run: | 
