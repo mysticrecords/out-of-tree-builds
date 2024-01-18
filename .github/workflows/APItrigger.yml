@@ -49,7 +49,7 @@ jobs:
 
       - name: test get
         run: | 
-         trigger_unquoted=(curl -v -u "${{ secrets.JENKINS_USER }}":"${{ secrets.JENKINS_TOKEN }}" "$URL/job/matt-wash-projects/job/bbbbbranch/lastBuild/api/json?tree=result")
+         trigger_unquoted=(curl -v -u "${{ secrets.JENKINS_USER }}":"${{ secrets.JENKINS_TOKEN }}" "${{ env.URL }}/job/matt-wash-projects/job/bbbbbranch/lastBuild/api/json?tree=result")
          echo $trigger_unquoted
          
       - name: access variable from utils.sh
