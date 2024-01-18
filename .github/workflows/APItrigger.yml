@@ -47,6 +47,16 @@ jobs:
          echo "CURL_POST: $CURL_POST"
          trigger=($CURL_POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
 
+      - name: test get
+        run: | 
+         trigger=("$CURL" "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         trigger_unquoted=($CURL "$URL/job/matt-wash-projects/job/bbbbbranch/lastBuild/api/json?tree=result")
+         res=$(echo "$trigger" | jq -r '.result')
+         res_un=$(echo "$trigger_unquoted" | jq -r '.result')
+
+         echo $res
+         echo $res_un
+
       - name: access variable from utils.sh
         run: | 
          echo $URL
