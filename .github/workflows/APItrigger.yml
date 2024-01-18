@@ -20,6 +20,7 @@ jobs:
     runs-on: runner
     env:
      AUTH: '"${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}"'
+     CURL: "curl -v -u $AUTH"
      URL: "https://a040-92-13-233-78.ngrok-free.app"
 
     steps:
@@ -32,7 +33,9 @@ jobs:
            
       - name: Multibranch Pipeline Trigger
         run: |
-         trigger=(curl -v -u $AUTH -X POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         trigger=($CURL -X POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         echo "$CURL"
+         echo $CURL
          echo "$trigger"
 
       - name: Install jq
@@ -44,7 +47,7 @@ jobs:
         run: | 
          branch="bbbbbranch"
          echo "BRANCH_TEST=${branch}" >> $GITHUB_ENV
-         request=$(curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" "https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${branch}/lastBuild/api/json?tree=result")
+         request=$($CURL "https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${branch}/lastBuild/api/json?tree=result")
          result=$(echo "$request" | jq -r '.result')
          echo "Build result: $result"
          echo "RESULT=${result}" >> $GITHUB_ENV
