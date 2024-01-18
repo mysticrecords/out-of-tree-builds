@@ -45,7 +45,7 @@ jobs:
       - name: test get
         run: | 
           trigger_unquoted=(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result")
-          res=$(echo -n "${trigger_unquoted[*]}" | jq -r '.result')
+          res=$(echo -n "${trigger_unquoted[*]}" | jq -r '._class')
           echo "$res"
           echo "${trigger_unquoted[*]}"
 
@@ -53,7 +53,7 @@ jobs:
         run: | 
           trigger_unquoted=(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result")
           echo -n "${trigger_unquoted[*]}" > response.json
-          res=$(jq -r '.result' < response.json)
+          res=$(jq -r '._class' < response.json)
           echo "$res"
           cat response.json
          
