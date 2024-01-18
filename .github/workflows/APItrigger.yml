@@ -26,14 +26,23 @@ jobs:
       - name: Set Branch Name
         run: | 
          echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+
+      - name: Source UTILS script
+        run: source .github/workflows/UTILS/utils.sh
+
+      - name: Debug Environment Variables
+        run: |
+          echo "URL: $URL"
+          echo "AUTH: $AUTH"
+          echo "CURL: $CURL"
+          echo "CURL_POST: $CURL_POST"
            
       - name: Multibranch Pipeline Trigger
-        run: |
-         source .github/workflows/UTILS/utils.sh 
-         echo $URL
-         echo "$POST"
-         echo "$POST"
-         echo $AUTH
+        run: | 
+         echo "URL: $URL"
+         echo "AUTH: $AUTH"
+         echo "CURL: $CURL"
+         echo "CURL_POST: $CURL_POST"
          trigger=($CURL_POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
 
       - name: access variable from utils.sh
