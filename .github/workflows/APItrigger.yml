@@ -27,7 +27,7 @@ jobs:
         run: |
           export AUTH="${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}"
           export CURL="curl -v -u $AUTH"
-          export CURL_POST="curl -v -u $AUTH -X POST"
+          export CURL_POST="$CURL $AUTH -X POST"
           export URL="https://a040-92-13-233-78.ngrok-free.app"
 
       - name: Set Branch Name
@@ -36,7 +36,7 @@ jobs:
            
       - name: Multibranch Pipeline Trigger
         run: |
-         trigger=($CURL_POST -X POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         trigger=($CURL_POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
          echo "$CURL"
          echo $CURL
          echo "$trigger"
