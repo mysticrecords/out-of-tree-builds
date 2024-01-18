@@ -30,6 +30,9 @@ jobs:
       - name: Multibranch Pipeline Trigger
         run: |
          source .github/workflows/UTILS/utils.sh 
+         echo $URL
+         echo $POST
+         echo $AUTH
          trigger=($CURL_POST "$URL/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
 
       - name: Install jq
