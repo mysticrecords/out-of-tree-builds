@@ -39,11 +39,11 @@ jobs:
          echo "CURL: $CURL"
          echo "CURL_POST: $CURL_POST"
 
-         trigger=(${{ env.CURL_POST }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+         trigger=$(${{ env.CURL_POST }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
 
       - name: test get
         run: | 
-          trigger_unquoted=(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result")
+          trigger_unquoted=$(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result")
           res=$(echo -n "$trigger_unquoted" | jq -r '.result')
           echo $trigger_unquoted
           echo "$res"
