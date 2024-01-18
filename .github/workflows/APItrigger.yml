@@ -29,10 +29,6 @@ jobs:
       - name: Debug Environment Variables
         run: |
           bash .github/workflows/UTILS/utils.sh
-          echo "URL=${URL}" >> GITHUB_ENV
-          echo "AUTH=${AUTH}" >> GITHUB_ENV
-          echo "CURL=${CURL}" >> GITHUB_ENV
-          echo "CURL_POST=${CURL_POST}" >> GITHUB_ENV
            
       - name: Multibranch Pipeline Trigger
         run: | 
