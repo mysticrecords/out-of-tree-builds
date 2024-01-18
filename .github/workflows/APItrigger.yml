@@ -18,11 +18,6 @@ permissions:
 jobs:
   trigger-jenkins-job:
     runs-on: runner
-    env:
-     AUTH: '"${{ secrets.JENKINS_USER }}":"${{ secrets.JENKINS_TOKEN }}"'
-     CURL: "curl -v -u"
-     URL: "https://a040-92-13-233-78.ngrok-free.app"
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -33,10 +28,11 @@ jobs:
          
       - name: Debug Environment Variables
         run: |
-          echo "URL: $URL"
-          echo "AUTH: $AUTH"
-          echo "CURL: $CURL"
-          echo "CURL_POST: $CURL_POST"
+          source ./github/workflows/UTILS/utils.sh
+          echo "URL: ${URL}" >> GITHUB_ENV
+          echo "AUTH: ${AUTH}" >> GITHUB_ENV
+          echo "CURL: ${CURL}" >> GITHUB_ENV
+          echo "CURL_POST: ${CURL_POST}" >> GITHUB_ENV
            
       - name: Multibranch Pipeline Trigger
         run: | 
