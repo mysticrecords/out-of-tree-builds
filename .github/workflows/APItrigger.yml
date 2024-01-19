@@ -2,11 +2,11 @@ name: Trigger Jenkins Job
 
 on:
   workflow_dispatch:
-  pull_request:
-    types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - any
+  #pull_request:
+    #types: [opened, synchronize, reopened]
+  #push:
+    #branches:
+      #- any
 
 permissions:
   contents: read
