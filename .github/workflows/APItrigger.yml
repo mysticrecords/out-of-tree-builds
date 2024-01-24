@@ -65,7 +65,7 @@ jobs:
           # trying to run tests to edit status of pr
           
           if [ $GITHUB_BASE_REF == "main" ]; then
-            STATE="pending"
+            STATE="error"
           else
             STATE="failure"
           fi
