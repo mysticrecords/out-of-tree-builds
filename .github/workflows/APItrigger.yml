@@ -1,11 +1,8 @@
 name: Trigger Jenkins Job
 
 on:
-  #pull_request:
-    #types: [opened, synchronize, reopened]
-  #push:
-    #branches:
-      #- any
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -26,12 +23,14 @@ jobs:
          echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
          
       - name: Debug Environment Variables
+        if: ${{ $GITHUB_BASE_REF == "main" }}
         run: |
           export JENKINS_USER="${{ secrets.JENKINS_USER }}"
           export JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
           source .github/workflows/UTILS/utils.sh
            
       - name: Multibranch Pipeline Trigger
+        if: ${{ $GITHUB_BASE_REF != "main" }}
         run: | 
          echo "URL: $URL"
          echo "AUTH: $AUTH"
@@ -41,6 +40,7 @@ jobs:
          trigger=$(${{ env.CURL_POST }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
 
       - name: test get
+        if: ${{ $GITHUB_BASE_REF != "main" }}
         run: | 
           trigger_unquoted=$(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result")
           res=$(echo -n "$trigger_unquoted" | jq -r '.result')
@@ -48,6 +48,7 @@ jobs:
           echo "$res"
  
       - name: access variable from utils.sh
+        if: ${{ $GITHUB_BASE_REF == "main" }}
         run: | 
          echo $URL
          echo "$POST"
