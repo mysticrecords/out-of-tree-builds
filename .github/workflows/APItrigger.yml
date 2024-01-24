@@ -21,7 +21,7 @@ jobs:
       - name: Set Branch Name
         run: | 
          echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
-         echo ${{ $GITHUB_BASE_REF }}
+         echo ${{ env.GITHUB_BASE_REF }}
          
       - name: Debug Environment Variables
         if: "env.GITHUB_BASE_REF == 'main'"
