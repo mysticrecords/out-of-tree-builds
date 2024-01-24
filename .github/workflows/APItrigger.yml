@@ -24,7 +24,7 @@ jobs:
          echo ${{ $GITHUB_BASE_REF }}
          
       - name: Debug Environment Variables
-        if: ${{ $GITHUB_BASE_REF == 'main' }}
+        if: "env.GITHUB_BASE_REF == 'main'"
         run: |
           export JENKINS_USER="${{ secrets.JENKINS_USER }}"
           export JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
