@@ -65,7 +65,7 @@ jobs:
           # trying to run tests to edit status of pr
           
           if [ $GITHUB_BASE_REF == "main" ]; then
-            STATE="error"
+            STATE="pending"
           else
             STATE="failure"
           fi
@@ -73,4 +73,4 @@ jobs:
           # Set the PR status using GitHub API
           curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}" \
             -H "Authorization: token ${GITHUB_TOKEN}" \
-            -d '{"state": "'$STATE'", "context": "Counting files edited"}'
+            -d '{"state": "'$STATE'", "context": "Trigger Jenkins Job"}'
