@@ -14,7 +14,8 @@ permissions:
 jobs:
   trigger-jenkins-job:
     runs-on: runner
-    if: github.base_ref != 'main'
+    
+    if: github.base_ref != "main"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
