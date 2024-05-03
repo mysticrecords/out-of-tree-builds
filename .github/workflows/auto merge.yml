@@ -43,7 +43,7 @@ jobs:
       - name: Create Pull Request using GitHub CLI
         run: |
           gh pr create --base "$DEST_BRANCH" --head "$NEW_BRANCH" \
-            --title "Auto-merge \"$TARGET_BRANCH\" into \"$DEST_BRANCH\"" \
-            --body "This PR merges the changes from \"$TARGET_BRANCH\" into \"$DEST_BRANCH\"."
+            --title "Auto-merge \"${{ github.event.inputs.targetBranch }}\" into \"${{ github.event.inputs.destinationBranch }}\"" \
+            --body "This PR merges the changes from \"${{ github.event.inputs.targetBranch }}\" into \"${{ github.event.inputs.destinationBranch }}\"."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
