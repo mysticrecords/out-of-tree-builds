@@ -12,7 +12,7 @@ on:
 
 jobs:
   auto_merge:
-    runs-on: ubuntu-latest
+    runs-on: runner
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -26,7 +26,6 @@ jobs:
 
       - name: Create a new branch for merging
         run: |
-          # Get the inputs
           TARGET_BRANCH="${{ github.event.inputs.targetBranch }}"
           DEST_BRANCH="${{ github.event.inputs.destinationBranch }}"
           NEW_BRANCH="merge-${TARGET_BRANCH}-into-${DEST_BRANCH}"
@@ -43,7 +42,7 @@ jobs:
       - name: Create Pull Request using GitHub CLI
         run: |
           gh pr create --base "$DEST_BRANCH" --head "$NEW_BRANCH" \
-            --title "Auto-merge \"${{ github.event.inputs.targetBranch }}\" into \"${{ github.event.inputs.destinationBranch }}\"" \
-            --body "This PR merges the changes from \"${{ github.event.inputs.targetBranch }}\" into \"${{ github.event.inputs.destinationBranch }}\"."
+            --title "Auto-merge ${{ github.event.inputs.targetBranch }} into ${{ github.event.inputs.destinationBranch }}" \
+            --body "This PR merges the changes from ${{ github.event.inputs.targetBranch }} into ${{ github.event.inputs.destinationBranch }}."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
