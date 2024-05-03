@@ -1,0 +1,48 @@
+name: Auto-Merge Commit
+
+on:
+  workflow_dispatch:
+    inputs:
+      targetBranch:
+        description: 'Branch to merge from'
+        required: true
+      destinationBranch:
+        description: 'Branch to merge into'
+        required: true
+
+jobs:
+  auto_merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up GitHub CLI
+        run: |
+          echo "::group::Install GitHub CLI"
+          sudo apt-get update
+          sudo apt-get install -y gh
+          echo "::endgroup::"
+
+      - name: Create a new branch for merging
+        run: |
+          # Get the inputs
+          TARGET_BRANCH="${{ github.event.inputs.targetBranch }}"
+          DEST_BRANCH="${{ github.event.inputs.destinationBranch }}"
+          NEW_BRANCH="merge-${TARGET_BRANCH}-into-${DEST_BRANCH}"
+
+          # Create the new branch from the destination branch
+          git fetch origin
+          git checkout -b $NEW_BRANCH origin/$DEST_BRANCH
+          git merge --no-ff origin/$TARGET_BRANCH -m "Merging $TARGET_BRANCH into $DEST_BRANCH"
+
+      - name: Push the new branch
+        run: |
+          git push origin $NEW_BRANCH
+
+      - name: Create Pull Request using GitHub CLI
+        run: |
+          gh auth login --with-token <<<"${{ secrets.GITHUB_TOKEN }}"
+          gh pr create --base "$DEST_BRANCH" --head "$NEW_BRANCH" \
+            --title "Auto-merge $TARGET_BRANCH into $DEST_BRANCH" \
+            --body "This PR merges the changes from $TARGET_BRANCH into $DEST_BRANCH."
