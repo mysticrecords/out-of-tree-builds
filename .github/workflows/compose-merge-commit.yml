@@ -28,7 +28,8 @@ jobs:
         run: |
           TARGET_BRANCH="${{ github.event.inputs.targetBranch }}"
           DEST_BRANCH="${{ github.event.inputs.destinationBranch }}"
-          NEW_BRANCH="merge-${TARGET_BRANCH}-into-${DEST_BRANCH}"
+          TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+          NEW_BRANCH="merge-${TARGET_BRANCH}-into-${DEST_BRANCH}-${TIMESTAMP}"
 
           # Create the new branch from the destination branch
           git fetch origin
