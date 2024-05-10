@@ -7,7 +7,7 @@ on:
 
 jobs:
   cppcheck:
-    runs-on: runner
+    runs-on: linux-runner
     container:
       image: ubuntu:24.04
       env: 
