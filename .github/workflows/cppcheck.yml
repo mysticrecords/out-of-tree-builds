@@ -8,6 +8,10 @@ on:
 jobs:
   cppcheck:
     runs-on: linux-runner
+    container:
+      image: ubuntu:22.04
+      env: 
+        CONTAINER_NAME: Ubuntu_CPPCheck
 
     steps:
     - name: whoami
