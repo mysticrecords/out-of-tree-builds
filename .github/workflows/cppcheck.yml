@@ -8,12 +8,12 @@ on:
 jobs:
   cppcheck:
     runs-on: linux-runner
-    container:
-      image: ubuntu:24.04
-      env: 
-        CONTAINER_NAME: Ubuntu_CPPCheck
 
     steps:
+    - name: whoami
+      run: |
+        whoami
+        
     - name: Checkout repository
       uses: actions/checkout@v3
 
