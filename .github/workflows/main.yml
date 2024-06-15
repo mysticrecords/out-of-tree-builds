@@ -34,9 +34,6 @@ jobs:
         restore-keys: |
           lfs-${{ runner.os }}-
 
-    - name: Check Cache Hit
-      run: echo "Cache hit: ${{ steps.lfs_cache.outputs.cache-hit }}"
-
     - name: Restore Git LFS cache
       if: steps.lfs_cache.outputs.cache-hit != 'true'
       run: git lfs pull
