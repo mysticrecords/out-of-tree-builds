@@ -1,0 +1,53 @@
+name: CI Workflow
+
+on: 
+workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: runner
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Ensure the entire history is fetched
+        lfs: true       # Ensure LFS files are handled
+
+    - name: Verify Git Checkout
+      run: git status
+
+    - name: Debug Git HEAD
+      run: git rev-parse HEAD
+
+    - name: Debug Git LFS Config
+      run: |
+        git lfs env
+        cat .lfsconfig
+
+    - name: Cache LFS files
+      id: lfs_cache
+      uses: actions/cache@v2
+      with:
+        path: .lfs_custom_storage
+        key: lfs-${{ runner.os }}-${{ github.sha }}
+        restore-keys: |
+          lfs-${{ runner.os }}-
+
+    - name: Check Cache Hit
+      run: echo "Cache hit: ${{ steps.lfs_cache.outputs.cache-hit }}"
+
+    - name: Restore Git LFS cache
+      if: steps.lfs_cache.outputs.cache-hit != 'true'
+      run: git lfs pull
+
+    - name: Run your other steps
+      if: steps.lfs_cache.outputs.cache-hit == 'true'
+      run: echo "Running other steps..."
+
+    - name: Save LFS cache
+      if: steps.lfs_cache.outputs.cache-hit != 'true'
+      uses: actions/cache@v2
+      with:
+        path: .lfs_custom_storage
+        key: lfs-${{ runner.os }}-${{ github.sha }}
