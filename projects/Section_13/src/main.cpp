@@ -13,6 +13,9 @@ int main() {
     movies.add_movie("Jaws", "R", 1);
     movies.increment_watched("Jaws");
 
+    movies.add_movie("Jaws", "R", 1);
+    movies.increment_watched("Jaws");
+
     movies.display();
 
     return 0;
