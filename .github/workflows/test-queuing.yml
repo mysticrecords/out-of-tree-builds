@@ -36,4 +36,4 @@ jobs:
         run: |
           curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}" \
           -H "Authorization: token ${GITHUB_TOKEN}" \
-          -d '{"state": "${{ steps.sleep.outcome }}", "context": "Sleep Status", "target_url": "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ env.LATEST_JOB_ID }}/job/${{ github.job_id }}#step:1:1"}'
+          -d '{"state": "${{ steps.sleep.outcome }}", "context": "Sleep Status", "target_url": "https://api.github.com/repos/${{ github.repository }}/actions/runs/${LATEST_JOB_ID}/job/${{ github.job_id }}#step:1:1"}'
