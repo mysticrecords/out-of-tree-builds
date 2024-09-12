@@ -1,0 +1,17 @@
+name: test-queuing-jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: queuing
+    runs-on: developer-builds
+    steps:
+    
+      - name: sleep
+        run: |
+          sleep 60
+          echo "job complete"
+      
+    
