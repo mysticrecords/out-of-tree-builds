@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: | 
             curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}/job/${{ github.run_id }}#step:1:1" \
-            -H "Authorization: token ${GUTHUB_TOKEN}" \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
             -d '{"state": "${{ steps.sleep.outcome }}", "context": "Sleep Status"}'
       
     
