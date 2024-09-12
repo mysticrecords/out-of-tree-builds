@@ -1,7 +1,14 @@
 name: test-queuing-jobs
 
 on:
-  workflow_dispatch:
+  #workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    
+permissions:
+  contents: read
+  checks: write
+  statuses: write
 
 jobs:
   build:
@@ -10,8 +17,18 @@ jobs:
     steps:
     
       - name: sleep
+        id: sleep
         run: |
-          sleep 60
+          sleep 5
           echo "job complete"
+
+      - name: set test status
+        if: ${{ always() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: | 
+            curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}/job/${{ github.run_id }}#step:1:1" \
+            -H "Authorization: token ${GUTHUB_TOKEN}" \
+            -d '{"state": "${{ steps.sleep.outcome }}", "context": "Sleep Status"}'
       
     
