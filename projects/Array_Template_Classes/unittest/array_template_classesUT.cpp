@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(test_get_size) {
     BOOST_CHECK_EQUAL(intArr.get_size(), sizeOfTestIntArr);
 }
 
-BOOST_AUTO_TEST_CASE(test_get_size2) {
+BOOST_AUTO_TEST_CASE(test_get_size4) {
     int testIntArr[5] {0};
     int sizeOfTestIntArr = std::end(testIntArr) - std::begin(testIntArr);
    
@@ -48,14 +48,12 @@ BOOST_AUTO_TEST_CASE(test_get_size2) {
     BOOST_CHECK_EQUAL(intArr.get_size(), sizeOfTestIntArr);
 }
 
-BOOST_AUTO_TEST_CASE(test_incorrect) 
-{
-    int a = 5;
-    BOOST_TEST(a == 5);
-}
+BOOST_AUTO_TEST_CASE(test_get_size2) {
+    int testIntArr[5] {0};
+    int sizeOfTestIntArr = std::end(testIntArr) - std::begin(testIntArr);
+   
+    Array<int, 5> intArr {0};
 
-BOOST_AUTO_TEST_CASE(blah_blah_blah) 
-{
-    int a = 5;
-    BOOST_TEST(a == 5);
+    std::cout << intArr.get_size() << " == " << sizeOfTestIntArr << std::endl;
+    BOOST_CHECK_EQUAL(intArr.get_size(), sizeOfTestIntArr);
 }

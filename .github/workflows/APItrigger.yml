@@ -1,28 +1,78 @@
 name: Trigger Jenkins Job
 
 on:
-  workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - any
+
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+  statuses: write
 
 jobs:
   trigger-jenkins-job:
     runs-on: runner
-
+    
+    if: github.base_ref != 'main'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-           
-      - name: Trigger Jenkins Job
-        run: |
-         BRANCH_NAME=${GITHUB_REF#refs/heads/}
-         echo "branch name = ${BRANCH_NAME}"
-         curl -v -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }}" -X POST https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ BRANCH_NAME }}/build
 
-      - name: Get Job Status
+      - name: Set Branch Name
+        run: | 
+         echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+         echo "GitHub Ref: ${{ github.base_ref }}"
+         echo "GitHub Ref: ${{ github.ref }}"
+         
+      - name: Debug Environment Variables
+        if: github.base_ref == 'main'
         run: |
-          response=$(curl -v -u "mawalsh:11168ae8636b233ed846b8d3a6226d099a" -X GET https://a040-92-13-233-78.ngrok-free.app/job/matt-wash-projects/job/${{ BRANCH_NAME }}/lastBuild/api/json?tree=result)
-          echo $response
+          export JENKINS_USER="${{ secrets.JENKINS_USER }}"
+          export JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
+          source .github/workflows/UTILS/utils.sh
+           
+      - name: Multibranch Pipeline Trigger
+        if: github.base_ref != 'main'
+        run: | 
+         echo "URL: $URL"
+         echo "AUTH: $AUTH"
+         echo "CURL: $CURL"
+         echo "CURL_POST: $CURL_POST"
+
+         trigger=$(${{ env.CURL_POST }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/build")
+
+      - name: test get
+        if: github.base_ref != 'main'
+        run: | 
+          trigger_unquoted=$(${{ env.CURL }} "${{ env.URL }}/job/matt-wash-projects/job/${{ env.BRANCH_NAME }}/lastBuild/api/json?tree=result")
+          res=$(echo -n "$trigger_unquoted" | jq -r '.result')
+          echo $trigger_unquoted
+          echo "$res"
+ 
+      - name: access variable from utils.sh
+        if: github.base_ref != 'main'
+        run: | 
+         echo $URL
+         echo "$POST"
+         echo "$POST"
+         echo $AUTH
+
+      - name: Set PR Status
+        if: ${{ always() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # trying to run tests to edit status of pr
+          
+          if [ $GITHUB_BASE_REF == "main" ]; then
+            STATE="error"
+          else
+            STATE="failure"
+          fi
+
+          # Set the PR status using GitHub API
+          curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}" \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            -d '{"state": "'$STATE'", "context": "Trigger Jenkins Job"}'
