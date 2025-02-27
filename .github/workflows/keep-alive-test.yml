@@ -21,4 +21,4 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/issues \
-            -d '{"title": "Automated Issue", "body": "This issue was created by a workflow using curl."}'
+            -d '{"title": "'"${{ github.workflow }}"': workflow error", "body": "An error occurred when running '"${{ github.workflow }}"' further investigation required. cc @mysticrecords", "labels": ["github-actions"]}'
