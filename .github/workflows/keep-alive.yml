@@ -8,7 +8,7 @@ permissions:
 
 jobs: 
   keep-alive:
-    runs-on: runner
+    runs-on: developer-builds
 
     steps:
       - name: simulate failure
