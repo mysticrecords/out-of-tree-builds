@@ -11,7 +11,7 @@ jobs:
     runs-on: developer-builds
 
     steps:
-      - name: simulate failure
+      - name: simulate-failure
         run: exit 1
 
       - name: create issue
