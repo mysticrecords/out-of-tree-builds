@@ -20,4 +20,4 @@ jobs:
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/issues \
-            -d '{"title": "'"${{ github.workflow }}"': workflow error", "body": "An error occurred when running '"${{ github.workflow }}"' further investigation required", "labels": ["github-actions"], "assignees": ["mysticrecords"]}'
+            -d '{"title": "'"${{ github.workflow }}"': workflow error", "body": "An error occurred when running '"${{ github.workflow }}"' further investigation required. [View failed run]('"${{ github.server_url }}"'/'"${{ github.repository }}"'/actions/runs/'"${{ github.run_id }}"')", "labels": ["github-actions"], "assignees": ["mysticrecords"]}'
