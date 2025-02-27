@@ -1,17 +1,40 @@
 name: test-queuing-jobs
 
 on:
-  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  checks: write
+  statuses: write
 
 jobs:
   build:
     name: queuing
     runs-on: developer-builds
     steps:
-    
+
       - name: sleep
+        id: sleep
         run: |
-          sleep 60
+          sleep 5
           echo "job complete"
-      
-    
+
+      - name: Fetch latest job ID
+        id: get_job_id
+        run: |
+          response=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs")
+          latest_job_id=$(echo "$response" | jq '.jobs | sort_by(.started_at) | .[-1].id')
+          echo "$latest_job_id"
+          echo "LATEST_JOB_ID=$latest_job_id" >> $GITHUB_ENV
+
+      - name: set test status
+        if: ${{ always() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -X POST "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}" \
+          -H "Authorization: token ${GITHUB_TOKEN}" \
+          -d '{"state": "${{ steps.sleep.outcome }}", "context": "Sleep Status", "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ env.LATEST_JOB_ID }}#step:1:1"}'
